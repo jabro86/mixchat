@@ -35,7 +35,7 @@ export default observer(class Login extends React.Component<LoginProps> {
 		const { email, password } = this;
 		return (
 			<Container>
-				<Header as="h2">Register</Header>
+				<Header as="h2">Login</Header>
 				<Input
 					name="email"
 					onChange={this.onChange}
