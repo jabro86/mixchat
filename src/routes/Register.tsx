@@ -8,7 +8,7 @@ interface RegisterState {
 	[key: string]: string;
 }
 
-interface RegisterProps extends RouteComponentProps<{}> { }
+interface RegisterProps extends RouteComponentProps<{}> {}
 
 export interface Error {
 	path: string;
@@ -25,7 +25,6 @@ export interface RegisterMutation {
 }
 
 class Register extends React.Component<ChildProps<RegisterProps, RegisterMutation>, RegisterState> {
-
 	state = {
 		username: "",
 		usernameError: "",
@@ -40,10 +39,9 @@ class Register extends React.Component<ChildProps<RegisterProps, RegisterMutatio
 		if (name === "username" || name === "email" || name === "password") {
 			this.setState({ [name]: value });
 		}
-	}
+	};
 
 	onSubmit = async () => {
-
 		this.setState({
 			usernameError: "",
 			emailError: "",
@@ -69,18 +67,10 @@ class Register extends React.Component<ChildProps<RegisterProps, RegisterMutatio
 
 			console.log(response); // tslint:disable-line
 		}
-	}
+	};
 
 	render() {
-
-		const {
-			username,
-			usernameError,
-			email,
-			emailError,
-			password,
-			passwordError
-		} = this.state;
+		const { username, usernameError, email, emailError, password, passwordError } = this.state;
 
 		const errorList = [];
 		if (usernameError) {
@@ -122,23 +112,20 @@ class Register extends React.Component<ChildProps<RegisterProps, RegisterMutatio
 					fluid={true}
 				/>
 				<Button onClick={this.onSubmit}>Submit</Button>
-				{usernameError || emailError || passwordError
-					? (
-						<Message
-							error={true}
-							header="There was some errors with your submission"
-							list={errorList}
-						/>
-					)
-					: null
-				}
+				{usernameError || emailError || passwordError ? (
+					<Message
+						error={true}
+						header="There was some errors with your submission"
+						list={errorList}
+					/>
+				) : null}
 			</Container>
 		);
 	}
 }
 
 const registerMutation = gql`
-	mutation ($username: String!, $email: String!, $password: String!) {
+	mutation($username: String!, $email: String!, $password: String!) {
 		register(username: $username, email: $email, password: $password) {
 			ok
 			errors {
@@ -146,7 +133,7 @@ const registerMutation = gql`
 				message
 			}
 		}
-  	}
+	}
 `;
 
 export default graphql<RegisterMutation>(registerMutation)(Register);
