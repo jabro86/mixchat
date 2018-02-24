@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Container, Header, Input, Button, Message } from "semantic-ui-react";
+import { Form, Container, Header, Input, Button, Message } from "semantic-ui-react";
 import { graphql, ChildProps } from "react-apollo";
 import { RouteComponentProps } from "react-router-dom";
 import gql from "graphql-tag";
@@ -86,33 +86,38 @@ class Register extends React.Component<ChildProps<RegisterProps, RegisterMutatio
 		return (
 			<Container>
 				<Header as="h2">Register</Header>
-				<Input
-					error={!!usernameError}
-					name="username"
-					onChange={this.onChange}
-					value={username}
-					placeholder="Username"
-					fluid={true}
-				/>
-				<Input
-					error={!!emailError}
-					name="email"
-					onChange={this.onChange}
-					value={email}
-					placeholder="Email"
-					fluid={true}
-				/>
-				<Input
-					error={!!passwordError}
-					name="password"
-					onChange={this.onChange}
-					value={password}
-					type="password"
-					placeholder="Password"
-					fluid={true}
-				/>
-				<Button onClick={this.onSubmit}>Submit</Button>
-				{usernameError || emailError || passwordError ? (
+				<Form>
+					<Form.Field error={!!usernameError}>
+						<Input
+							name="username"
+							onChange={this.onChange}
+							value={username}
+							placeholder="Username"
+							fluid={true}
+						/>
+					</Form.Field>
+					<Form.Field error={!!emailError}>
+						<Input
+							name="email"
+							onChange={this.onChange}
+							value={email}
+							placeholder="Email"
+							fluid={true}
+						/>
+					</Form.Field>
+					<Form.Field error={!!passwordError}>
+						<Input
+							name="password"
+							onChange={this.onChange}
+							value={password}
+							type="password"
+							placeholder="Password"
+							fluid={true}
+						/>
+					</Form.Field>
+					<Button onClick={this.onSubmit}>Submit</Button>
+				</Form>
+				{errorList.length ? (
 					<Message
 						error={true}
 						header="There was some errors with your submission"
