@@ -82,4 +82,4 @@ const allTeamsQuery = gql`
 	}
 `;
 
-export default graphql<{}, SidebarProps>(allTeamsQuery)(Sidebar);
+export default graphql<SidebarProps>(allTeamsQuery)(Sidebar);

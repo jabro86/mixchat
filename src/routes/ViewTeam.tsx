@@ -9,7 +9,7 @@ import Sidebar from "../containers/Sidebar";
 export default () => (
 	<AppLayout>
 		<Header channelName="general" />
-		<Sidebar currentTeamId={1} />
+		<Sidebar currentTeamId={5} />
 		<Messages>
 			<ul className="message-list">
 				<li />

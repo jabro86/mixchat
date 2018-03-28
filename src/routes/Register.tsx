@@ -141,4 +141,4 @@ const registerMutation = gql`
 	}
 `;
 
-export default graphql<RegisterMutation>(registerMutation)(Register);
+export default graphql(registerMutation)(Register);
