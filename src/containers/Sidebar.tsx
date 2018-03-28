@@ -6,6 +6,7 @@ import * as decode from "jwt-decode";
 
 import Channels from "../components/Channels";
 import Teams from "../components/Teams";
+import AddChannelModal from "../components/AddChannelModal";
 
 export interface Channel {
 	id: number;
@@ -27,7 +28,26 @@ export interface SidebarProps {
 	currentTeamId: string;
 }
 
-export class Sidebar extends React.Component<ChildProps<SidebarProps, AllTeamsQueryResult>> {
+export interface SidebarState {
+	openAddChannelModal: boolean;
+}
+
+export class Sidebar extends React.Component<
+	ChildProps<SidebarProps, AllTeamsQueryResult>,
+	SidebarState
+> {
+	state = {
+		openAddChannelModal: false
+	};
+
+	handleCloseAddChannelModal = () => {
+		this.setState({ openAddChannelModal: false });
+	};
+
+	handleAddChannelClick = () => {
+		this.setState({ openAddChannelModal: true });
+	};
+
 	render() {
 		if (this.props.data === undefined) {
 			return null;
@@ -64,9 +84,14 @@ export class Sidebar extends React.Component<ChildProps<SidebarProps, AllTeamsQu
 				username={username}
 				channels={team.channels}
 				users={[{ id: 1, name: "slackbot" }, { id: 2, name: "user1" }]}
-			>
-				Channels
-			</Channels>
+				onAddChannelClick={this.handleAddChannelClick}
+			/>,
+			<AddChannelModal
+				teamId={parseInt(currentTeamId, 10)}
+				key="sidebar-add-channel-modal"
+				open={this.state.openAddChannelModal}
+				onClose={this.handleCloseAddChannelModal}
+			/>
 		];
 	}
 }

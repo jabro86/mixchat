@@ -8,7 +8,7 @@ import { InMemoryCache } from "apollo-cache-inmemory";
 import { ApolloProvider } from "react-apollo";
 import registerServiceWorker from "./registerServiceWorker";
 import Routes from "./routes/index";
-import "semantic-ui-css/semantic.min.css";
+import "semantic-ui-css/semantic.css";
 
 // tslint:disable-next-line:no-any
 const httpLink: any = createHttpLink({ uri: "http://localhost:8080/graphql" });
