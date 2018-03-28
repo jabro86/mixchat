@@ -11,8 +11,13 @@ export interface Error {
 	message: string;
 }
 
+export interface Team {
+	id: number;
+}
+
 export interface CreateTeamResponse {
 	ok: boolean;
+	team: Team;
 	errors: Error[];
 }
 
@@ -54,9 +59,9 @@ class CreateTeam extends React.Component<ChildProps<CreateTeamProps, CreateTeamM
 				this.props.history.push("/login");
 				return;
 			}
-			const { ok, errors } = response.data.createTeam;
+			const { ok, errors, team } = response.data.createTeam;
 			if (ok) {
-				this.props.history.push("/");
+				this.props.history.push(`/view-team/${team.id}`);
 			} else {
 				const err = {
 					nameError: ""
@@ -108,6 +113,9 @@ const createTeamMutation = gql`
 	mutation($name: String!) {
 		createTeam(name: $name) {
 			ok
+			team {
+				id
+			}
 			errors {
 				path
 				message

@@ -24,7 +24,7 @@ export interface AllTeamsQueryResult {
 }
 
 export interface SidebarProps {
-	currentTeamId: number;
+	currentTeamId: string;
 }
 
 export class Sidebar extends React.Component<ChildProps<SidebarProps, AllTeamsQueryResult>> {
@@ -37,7 +37,9 @@ export class Sidebar extends React.Component<ChildProps<SidebarProps, AllTeamsQu
 			return null;
 		}
 
-		const teamIdx = _.findIndex(allTeams, ["id", currentTeamId]);
+		const teamIdx = currentTeamId
+			? _.findIndex(allTeams, ["id", parseInt(currentTeamId, 10)])
+			: 0;
 		const team = allTeams[teamIdx];
 		let username: string;
 		try {

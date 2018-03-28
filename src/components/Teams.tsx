@@ -1,5 +1,6 @@
 import * as React from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 const TeamWrapper = styled.div`
 	grid-column: 1;
@@ -43,7 +44,9 @@ export interface TeamsProps {
 }
 
 const team = ({ id, letter }: IdAndLetter) => (
-	<TeamListItem key={`team-${id}`}>{letter}</TeamListItem>
+	<Link to={`/view-team/${id}`} key={`team-${id}`}>
+		<TeamListItem>{letter}</TeamListItem>
+	</Link>
 );
 
 export default class Teams extends React.Component<TeamsProps> {
