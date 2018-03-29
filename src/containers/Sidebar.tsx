@@ -1,5 +1,4 @@
 import * as React from "react";
-import gql from "graphql-tag";
 import { graphql, ChildProps } from "react-apollo";
 import * as _ from "lodash";
 import * as decode from "jwt-decode";
@@ -7,7 +6,7 @@ import * as decode from "jwt-decode";
 import Channels from "../components/Channels";
 import Teams from "../components/Teams";
 import AddChannelModal from "../components/AddChannelModal";
-
+import { allTeamsQuery } from "../graphql/team";
 export interface Channel {
 	id: number;
 	name: string;
@@ -82,12 +81,13 @@ export class Sidebar extends React.Component<
 				key="channels-sidebar"
 				teamName={team.name}
 				username={username}
+				teamId={team.id}
 				channels={team.channels}
 				users={[{ id: 1, name: "slackbot" }, { id: 2, name: "user1" }]}
 				onAddChannelClick={this.handleAddChannelClick}
 			/>,
 			<AddChannelModal
-				teamId={parseInt(currentTeamId, 10)}
+				teamId={team.id}
 				key="sidebar-add-channel-modal"
 				open={this.state.openAddChannelModal}
 				onClose={this.handleCloseAddChannelModal}
@@ -95,18 +95,5 @@ export class Sidebar extends React.Component<
 		];
 	}
 }
-
-const allTeamsQuery = gql`
-	{
-		allTeams {
-			id
-			name
-			channels {
-				id
-				name
-			}
-		}
-	}
-`;
 
 export default graphql<SidebarProps>(allTeamsQuery)(Sidebar);
