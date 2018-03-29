@@ -1,40 +1,21 @@
 import * as React from "react";
-import { graphql, ChildProps } from "react-apollo";
-import * as _ from "lodash";
 import * as decode from "jwt-decode";
 
 import Channels from "../components/Channels";
-import Teams from "../components/Teams";
+import Teams, { TeamIdAndFirstLetter } from "../components/Teams";
 import AddChannelModal from "../components/AddChannelModal";
-import { allTeamsQuery } from "../graphql/team";
-export interface Channel {
-	id: number;
-	name: string;
-}
-
-export interface Team {
-	id: number;
-	name: string;
-	channels: Channel[];
-}
-
-export interface AllTeamsQueryResult {
-	loading: boolean;
-	allTeams: Team[];
-}
+import { Team } from "../routes/ViewTeam";
 
 export interface SidebarProps {
-	currentTeamId: string;
+	teams: TeamIdAndFirstLetter[];
+	team: Team;
 }
 
 export interface SidebarState {
 	openAddChannelModal: boolean;
 }
 
-export class Sidebar extends React.Component<
-	ChildProps<SidebarProps, AllTeamsQueryResult>,
-	SidebarState
-> {
+export class Sidebar extends React.Component<SidebarProps, SidebarState> {
 	state = {
 		openAddChannelModal: false
 	};
@@ -48,18 +29,8 @@ export class Sidebar extends React.Component<
 	};
 
 	render() {
-		if (this.props.data === undefined) {
-			return null;
-		}
-		const { data: { loading, allTeams }, currentTeamId } = this.props;
-		if (loading || allTeams === undefined) {
-			return null;
-		}
+		const { team, teams } = this.props;
 
-		const teamIdx = currentTeamId
-			? _.findIndex(allTeams, ["id", parseInt(currentTeamId, 10)])
-			: 0;
-		const team = allTeams[teamIdx];
 		let username: string;
 		try {
 			// tslint:disable-next-line:no-any
@@ -70,13 +41,7 @@ export class Sidebar extends React.Component<
 			username = "";
 		}
 		return [
-			<Teams
-				key="team-sidebar"
-				teams={allTeams.map(t => ({
-					id: t.id,
-					letter: t.name.charAt(0).toUpperCase()
-				}))}
-			/>,
+			<Teams key="team-sidebar" teams={teams} />,
 			<Channels
 				key="channels-sidebar"
 				teamName={team.name}
@@ -96,4 +61,4 @@ export class Sidebar extends React.Component<
 	}
 }
 
-export default graphql<SidebarProps>(allTeamsQuery)(Sidebar);
+export default Sidebar;

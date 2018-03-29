@@ -34,16 +34,16 @@ const TeamListItem = styled.li`
 	}
 `;
 
-export interface IdAndLetter {
+export interface TeamIdAndFirstLetter {
 	id: number;
 	letter: string;
 }
 
 export interface TeamsProps {
-	teams: IdAndLetter[];
+	teams: TeamIdAndFirstLetter[];
 }
 
-const team = ({ id, letter }: IdAndLetter) => (
+const team = ({ id, letter }: TeamIdAndFirstLetter) => (
 	<Link to={`/view-team/${id}`} key={`team-${id}`}>
 		<TeamListItem>{letter}</TeamListItem>
 	</Link>
