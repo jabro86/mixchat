@@ -55,6 +55,7 @@ export interface ChannelsProps {
 	channels: IdAndName[];
 	users: IdAndName[];
 	onAddChannelClick(): void;
+	onInvitePeopleClick(): void;
 }
 
 const channel = ({ id, name }: IdAndName, teamId: number) => (
@@ -69,7 +70,15 @@ const user = ({ id, name }: IdAndName) => (
 );
 export default class Channels extends React.Component<ChannelsProps> {
 	render() {
-		const { teamName, username, channels, users, onAddChannelClick, teamId } = this.props;
+		const {
+			teamName,
+			username,
+			channels,
+			users,
+			onAddChannelClick,
+			teamId,
+			onInvitePeopleClick
+		} = this.props;
 		return (
 			<ChannelWrapper>
 				<PushLeft>
@@ -89,6 +98,11 @@ export default class Channels extends React.Component<ChannelsProps> {
 						<SideBarListHeader>Direct Messages</SideBarListHeader>
 						{users.map(user)}
 					</SideBarList>
+				</div>
+				<div>
+					<a href="#invite-people" onClick={onInvitePeopleClick}>
+						+ Invite People
+					</a>
 				</div>
 			</ChannelWrapper>
 		);

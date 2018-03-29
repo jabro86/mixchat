@@ -45,9 +45,9 @@ class ViewTeam extends React.Component<
 			return null;
 		}
 
-		const teamIdx = !!teamId ? _.findIndex(allTeams, ["id", parseInt(teamId, 10)]) : 0;
+		const teamIdx = teamId ? _.findIndex(allTeams, ["id", parseInt(teamId, 10)]) : 0;
 		const team = allTeams[teamIdx];
-		const channelIdx = !!channelId
+		const channelIdx = channelId
 			? _.findIndex(team.channels, ["id", parseInt(channelId, 10)])
 			: 0;
 		const channel = team.channels[channelIdx];
