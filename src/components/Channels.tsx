@@ -51,6 +51,7 @@ export interface IdAndName {
 export interface ChannelsProps {
 	teamName: string;
 	username: string;
+	isOwner: boolean;
 	teamId: number;
 	channels: IdAndName[];
 	users: IdAndName[];
@@ -75,8 +76,9 @@ export default class Channels extends React.Component<ChannelsProps> {
 			username,
 			channels,
 			users,
-			onAddChannelClick,
 			teamId,
+			isOwner,
+			onAddChannelClick,
 			onInvitePeopleClick
 		} = this.props;
 		return (
@@ -88,7 +90,8 @@ export default class Channels extends React.Component<ChannelsProps> {
 				<div>
 					<SideBarList>
 						<SideBarListHeader>
-							Channels <Icon name="add circle" onClick={onAddChannelClick} />
+							Channels{" "}
+							{isOwner && <Icon name="add circle" onClick={onAddChannelClick} />}
 						</SideBarListHeader>
 						{channels.map(c => channel(c, teamId))}
 					</SideBarList>
@@ -99,11 +102,13 @@ export default class Channels extends React.Component<ChannelsProps> {
 						{users.map(user)}
 					</SideBarList>
 				</div>
-				<div>
-					<a href="#invite-people" onClick={onInvitePeopleClick}>
-						+ Invite People
-					</a>
-				</div>
+				{isOwner && (
+					<div>
+						<a href="#invite-people" onClick={onInvitePeopleClick}>
+							+ Invite People
+						</a>
+					</div>
+				)}
 			</ChannelWrapper>
 		);
 	}

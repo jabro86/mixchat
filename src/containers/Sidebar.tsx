@@ -41,11 +41,13 @@ export class Sidebar extends React.Component<SidebarProps, SidebarState> {
 		const { team, teams } = this.props;
 
 		let username: string;
+		let isOwner = false;
 		try {
 			// tslint:disable-next-line:no-any
 			const token: any = localStorage.getItem("token");
 			const { user } = decode(token);
 			username = user.username;
+			isOwner = user.id === team.owner;
 		} catch (err) {
 			username = "";
 		}
@@ -56,6 +58,7 @@ export class Sidebar extends React.Component<SidebarProps, SidebarState> {
 				teamName={team.name}
 				username={username}
 				teamId={team.id}
+				isOwner={isOwner}
 				channels={team.channels}
 				users={[{ id: 1, name: "slackbot" }, { id: 2, name: "user1" }]}
 				onAddChannelClick={this.toggleAddChannelModal}

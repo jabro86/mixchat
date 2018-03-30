@@ -16,6 +16,7 @@ export interface Channel {
 
 export interface Team {
 	id: number;
+	owner: number;
 	name: string;
 	channels: Channel[];
 }
