@@ -54,8 +54,8 @@ export interface ChannelsProps {
 	teamId: number;
 	channels: IdAndName[];
 	users: IdAndName[];
-	onAddChannelClick(): void;
-	onInvitePeopleClick(): void;
+	onAddChannelClick(event: React.SyntheticEvent<{}>): void;
+	onInvitePeopleClick(event: React.SyntheticEvent<{}>): void;
 }
 
 const channel = ({ id, name }: IdAndName, teamId: number) => (

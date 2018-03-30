@@ -9,7 +9,7 @@ import normalizeErrors from "../normalizeErrors";
 interface InvitePeopleModalProps {
 	teamId: string;
 	open: boolean;
-	onClose(): void;
+	onClose(event?: React.SyntheticEvent<{}>): void;
 }
 
 // tslint:disable-next-line:no-any
