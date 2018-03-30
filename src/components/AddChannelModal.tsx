@@ -16,7 +16,15 @@ interface AddChannelModalProps {
 const AddChannelModal = (props: any) => {
 	const { open, onClose, values, handleChange, handleBlur, isSubmitting, handleSubmit } = props;
 	return (
-		<Modal open={open} onClose={onClose} style={{ marginTop: "0px" }}>
+		<Modal
+			open={open}
+			onClose={onClose}
+			style={{
+				marginTop: "0px !important",
+				marginLeft: "auto",
+				marginRight: "auto"
+			}}
+		>
 			<Modal.Header>Add Channel</Modal.Header>
 			<Modal.Content>
 				<Form>

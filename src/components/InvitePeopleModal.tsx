@@ -26,7 +26,15 @@ const InvitePeopleModal = (props: any) => {
 		errors
 	} = props;
 	return (
-		<Modal open={open} onClose={onClose} style={{ marginTop: "0px" }}>
+		<Modal
+			open={open}
+			onClose={onClose}
+			style={{
+				marginTop: "0px !important",
+				marginLeft: "auto",
+				marginRight: "auto"
+			}}
+		>
 			<Modal.Header>Add People to your Team</Modal.Header>
 			<Modal.Content>
 				<Form>

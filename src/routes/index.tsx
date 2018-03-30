@@ -48,7 +48,11 @@ export default () => {
 				<Route path="/" exact={true} component={Home} />
 				<Route path="/register" exact={true} component={Register} />
 				<Route path="/login" exact={true} component={Login} />
-				<Route path="/view-team/:teamId?/:channelId?" exact={true} component={ViewTeam} />
+				<PrivateRoute
+					path="/view-team/:teamId?/:channelId?"
+					exact={true}
+					component={ViewTeam}
+				/>
 				<PrivateRoute path="/create-team" exact={true} component={CreateTeam} />
 			</Switch>
 		</BrowserRouter>
