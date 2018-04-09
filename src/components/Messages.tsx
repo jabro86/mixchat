@@ -6,8 +6,5 @@ const MessagesWrapper = styled.div`
 	grid-row: 2;
 `;
 
-export interface MessagesProps {
-	channelId: number;
-}
-
-export default ({ channelId }: MessagesProps) => <MessagesWrapper />;
+// tslint:disable-next-line:no-any
+export default ({ children }: any) => <MessagesWrapper>{children}</MessagesWrapper>;

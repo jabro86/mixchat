@@ -5,10 +5,10 @@ import * as _ from "lodash";
 
 import { allTeamsQuery } from "../graphql/team";
 import Header from "../components/Header";
-import Messages from "../components/Messages";
 import SendMessage from "../components/SendMessage";
 import AppLayout from "../components/AppLayout";
 import Sidebar from "../containers/Sidebar";
+import MessageContainer from "../containers/MessageContainer";
 export interface Channel {
 	id: number;
 	name: string;
@@ -80,15 +80,8 @@ class ViewTeam extends React.Component<
 					}))}
 					team={team}
 				/>
-				{channel && (
-					<Messages channelId={channel.id}>
-						<ul className="message-list">
-							<li />
-							<li />
-						</ul>
-					</Messages>
-				)}
-				{channel && <SendMessage channelName={channel.name} />}
+				{channel && <MessageContainer channelId={channel.id} />}
+				{channel && <SendMessage channelName={channel.name} channelId={channel.id} />}
 			</AppLayout>
 		);
 	}
