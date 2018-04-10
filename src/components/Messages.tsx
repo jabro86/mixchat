@@ -6,6 +6,9 @@ const MessagesWrapper = styled.div`
 	grid-row: 2;
 	padding-left: 20px;
 	padding-right: 20px;
+	display: flex;
+	flex-direction: column-reverse;
+	overflow-y: auto;
 `;
 
 // tslint:disable-next-line:no-any

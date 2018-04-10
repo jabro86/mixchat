@@ -7,6 +7,7 @@
     "apollo-client-preset": "^1.0.8",
     "apollo-link-context": "^1.0.7",
     "apollo-link-error": "^1.0.7",
+    "apollo-link-ws": "^1.0.7",
     "formik": "^0.11.11",
     "graphql": "0.13.0",
     "graphql-tag": "^2.8.0",
@@ -21,7 +22,8 @@
     "react-scripts-ts": "^2.14.0",
     "semantic-ui-css": "^2.3.1",
     "semantic-ui-react": "^0.79.0",
-    "styled-components": "^3.2.3"
+    "styled-components": "^3.2.3",
+    "subscriptions-transport-ws": "^0.9.7"
   },
   "scripts": {
     "precommit": "pretty-quick --staged",
