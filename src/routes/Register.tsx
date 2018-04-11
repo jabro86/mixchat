@@ -64,8 +64,6 @@ class Register extends React.Component<ChildProps<RegisterProps, RegisterMutatio
 				});
 				this.setState({ ...err });
 			}
-
-			console.log(response); // tslint:disable-line
 		}
 	};
 

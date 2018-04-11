@@ -21,11 +21,13 @@ const newChannelMessageSubscription = gql`
 `;
 
 class MessageContainer extends React.Component<any> {
-	componentDidMount() {
-		this.props.data.subscribeToMore({
+	unsubscribe: Function;
+
+	subscribe = (channelId: number) => {
+		return this.props.data.subscribeToMore({
 			document: newChannelMessageSubscription,
 			variables: {
-				channelId: this.props.channelId
+				channelId
 			},
 			updateQuery: (prev: any, { subscriptionData }: any) => {
 				if (!subscriptionData) {
@@ -37,6 +39,24 @@ class MessageContainer extends React.Component<any> {
 				};
 			}
 		});
+	};
+	componentDidMount() {
+		this.unsubscribe = this.subscribe(this.props.channelId);
+	}
+
+	componentWillReceiveProps({ channelId }: any) {
+		if (this.props.channelId !== channelId) {
+			if (this.unsubscribe) {
+				this.unsubscribe();
+			}
+			this.unsubscribe = this.subscribe(channelId);
+		}
+	}
+
+	componentWillUnmount() {
+		if (this.unsubscribe) {
+			this.unsubscribe();
+		}
 	}
 
 	render() {
@@ -78,12 +98,11 @@ const messagesQuery = gql`
 `;
 
 // tslint:disable-next-line:no-any
-const operationOptions: any = {
-	// tslint:disable-next-line:no-any
-	variables: (props: any) => ({
-		channelId: props.channelId
-	})
-};
-
-// tslint:disable-next-line:no-any
-export default graphql<any>(messagesQuery, operationOptions)(MessageContainer);
+export default graphql<any>(messagesQuery, {
+	options: (props: any) => {
+		return {
+			variables: { channelId: props.channelId },
+			fetchPolicy: "network-only"
+		};
+	}
+})(MessageContainer);
