@@ -67,13 +67,15 @@ export default compose(
 			values,
 			{ props: { channelId, mutate }, setSubmitting, resetForm }
 		) => {
+			console.log("handleSubmit in SendMessage");
 			if (!values.message || !values.message.trim()) {
 				setSubmitting(false);
 				return;
 			}
-			await mutate({
+			const result = await mutate({
 				variables: { channelId, text: values.message }
 			});
+			console.log("result", result);
 			resetForm(false);
 		}
 	})
