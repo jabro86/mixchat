@@ -18,6 +18,7 @@ export interface Team {
 	id: number;
 	owner: number;
 	name: string;
+	admin: boolean;
 	channels: Channel[];
 }
 
@@ -49,7 +50,7 @@ class ViewTeam extends React.Component<
 			match: { params: { teamId, channelId } }
 		} = this.props;
 
-		if (loading) {
+		if (loading || me === undefined) {
 			return null;
 		}
 		const teams = [];
@@ -83,6 +84,7 @@ class ViewTeam extends React.Component<
 						letter: t.name.charAt(0).toUpperCase()
 					}))}
 					team={team}
+					username={me.username}
 				/>
 				{channel && <MessageContainer channelId={channel.id} />}
 				{channel && (

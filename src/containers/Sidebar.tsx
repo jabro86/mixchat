@@ -1,5 +1,4 @@
 import * as React from "react";
-import * as decode from "jwt-decode";
 
 import Channels from "../components/Channels";
 import Teams, { TeamIdAndFirstLetter } from "../components/Teams";
@@ -10,6 +9,7 @@ import { Team } from "../routes/ViewTeam";
 export interface SidebarProps {
 	teams: TeamIdAndFirstLetter[];
 	team: Team;
+	username: string;
 }
 
 export interface SidebarState {
@@ -27,30 +27,23 @@ export class Sidebar extends React.Component<SidebarProps, SidebarState> {
 		if (event) {
 			event.preventDefault();
 		}
-		this.setState(state => ({ openAddChannelModal: !state.openAddChannelModal }));
+		this.setState(state => ({
+			openAddChannelModal: !state.openAddChannelModal
+		}));
 	};
 
 	toggleInvitePeopleModal = (event?: React.SyntheticEvent<{}>) => {
 		if (event) {
 			event.preventDefault();
 		}
-		this.setState(state => ({ openInvitePeopleModal: !state.openInvitePeopleModal }));
+		this.setState(state => ({
+			openInvitePeopleModal: !state.openInvitePeopleModal
+		}));
 	};
 
 	render() {
-		const { team, teams } = this.props;
+		const { team, teams, username } = this.props;
 
-		let username: string;
-		let isOwner = false;
-		try {
-			// tslint:disable-next-line:no-any
-			const token: any = localStorage.getItem("token");
-			const { user } = decode(token);
-			username = user.username;
-			isOwner = user.id === team.owner;
-		} catch (err) {
-			username = "";
-		}
 		return [
 			<Teams key="team-sidebar" teams={teams} />,
 			<Channels
@@ -58,7 +51,7 @@ export class Sidebar extends React.Component<SidebarProps, SidebarState> {
 				teamName={team.name}
 				username={username}
 				teamId={team.id}
-				isOwner={isOwner}
+				isOwner={team.admin}
 				channels={team.channels}
 				users={[{ id: 1, name: "slackbot" }, { id: 2, name: "user1" }]}
 				onAddChannelClick={this.toggleAddChannelModal}
