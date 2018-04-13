@@ -5,7 +5,7 @@ import gql from "graphql-tag";
 import { graphql, compose, MutateProps } from "react-apollo";
 import * as _ from "lodash";
 
-import { allTeamsQuery } from "../graphql/team";
+import { meQuery } from "../graphql/team";
 interface AddChannelModalProps {
 	teamId: string;
 	open: boolean;
@@ -14,7 +14,15 @@ interface AddChannelModalProps {
 
 // tslint:disable-next-line:no-any
 const AddChannelModal = (props: any) => {
-	const { open, onClose, values, handleChange, handleBlur, isSubmitting, handleSubmit } = props;
+	const {
+		open,
+		onClose,
+		values,
+		handleChange,
+		handleBlur,
+		isSubmitting,
+		handleSubmit
+	} = props;
 	return (
 		<Modal
 			open={open}
@@ -67,7 +75,9 @@ const createChannelMutation = gql`
 export default compose(
 	graphql(createChannelMutation),
 	withFormik({
-		mapPropsToValues: (props: AddChannelModalProps & MutateProps) => ({ name: "" }),
+		mapPropsToValues: (props: AddChannelModalProps & MutateProps) => ({
+			name: ""
+		}),
 		handleSubmit: async (
 			values,
 			{ props: { teamId, mutate, onClose }, setSubmitting, setErrors }
@@ -92,10 +102,10 @@ export default compose(
 							return;
 						}
 						// tslint:disable-next-line:no-any
-						const data: any = store.readQuery({ query: allTeamsQuery });
-						const teamIdx = _.findIndex(data.allTeams, ["id", teamId]);
-						data.allTeams[teamIdx].channels.push(channel);
-						store.writeQuery({ query: allTeamsQuery, data });
+						const data: any = store.readQuery({ query: meQuery });
+						const teamIdx = _.findIndex(data.me.teams, ["id", teamId]);
+						data.me.teams[teamIdx].channels.push(channel);
+						store.writeQuery({ query: meQuery, data });
 					}
 				}
 			});

@@ -3,7 +3,7 @@ import { RouteComponentProps, Redirect } from "react-router-dom";
 import { graphql, ChildProps } from "react-apollo";
 import * as _ from "lodash";
 
-import { allTeamsQuery } from "../graphql/team";
+import { meQuery } from "../graphql/team";
 import Header from "../components/Header";
 import SendMessage from "../components/SendMessage";
 import AppLayout from "../components/AppLayout";
@@ -21,10 +21,15 @@ export interface Team {
 	channels: Channel[];
 }
 
+export interface MeQuery {
+	id: number;
+	username: string;
+	teams: Team[];
+}
+
 export interface AllTeamsQueryResult {
 	loading: boolean;
-	allTeams: Team[];
-	inviteTeams: Team[];
+	me: MeQuery;
 }
 
 interface ViewTeamProps {
@@ -40,20 +45,16 @@ class ViewTeam extends React.Component<
 			return null;
 		}
 		const {
-			data: { loading, allTeams, inviteTeams },
+			data: { loading, me },
 			match: { params: { teamId, channelId } }
 		} = this.props;
 
 		if (loading) {
 			return null;
 		}
-
 		const teams = [];
-		if (allTeams !== undefined) {
-			teams.push(...allTeams);
-		}
-		if (inviteTeams !== undefined) {
-			teams.push(...inviteTeams);
+		if (me !== undefined) {
+			teams.push(...me.teams);
 		}
 
 		if (!teams.length) {
@@ -61,14 +62,17 @@ class ViewTeam extends React.Component<
 		}
 
 		const teamIdInteger = parseInt(teamId, 10);
-		const teamIdx = teamIdInteger ? _.findIndex(teams, ["id", teamIdInteger]) : 0;
+		const teamIdx = teamIdInteger
+			? _.findIndex(teams, ["id", teamIdInteger])
+			: 0;
 		const team = teamIdx === -1 ? teams[0] : teams[teamIdx];
 
 		const channelIdInteger = parseInt(channelId, 10);
 		const channelIdx = channelIdInteger
 			? _.findIndex(team.channels, ["id", channelIdInteger])
 			: 0;
-		const channel = channelIdx === -1 ? team.channels[0] : team.channels[channelIdx];
+		const channel =
+			channelIdx === -1 ? team.channels[0] : team.channels[channelIdx];
 
 		return (
 			<AppLayout>
@@ -81,10 +85,14 @@ class ViewTeam extends React.Component<
 					team={team}
 				/>
 				{channel && <MessageContainer channelId={channel.id} />}
-				{channel && <SendMessage channelName={channel.name} channelId={channel.id} />}
+				{channel && (
+					<SendMessage channelName={channel.name} channelId={channel.id} />
+				)}
 			</AppLayout>
 		);
 	}
 }
 
-export default graphql<RouteComponentProps<ViewTeamProps>>(allTeamsQuery)(ViewTeam);
+export default graphql<RouteComponentProps<ViewTeamProps>>(meQuery, {
+	options: { fetchPolicy: "network-only" }
+})(ViewTeam);

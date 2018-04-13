@@ -8,7 +8,7 @@ import { getMainDefinition } from "apollo-utilities";
 import { OperationDefinitionNode } from "graphql";
 
 // tslint:disable-next-line:no-any
-const httpLink: any = createHttpLink({ uri: "http://localhost:8080/graphql" });
+const httpLink: any = createHttpLink({ uri: "http://10.45.1.11:8080/graphql" });
 
 const authLink = setContext(() => ({
 	headers: {
@@ -39,7 +39,7 @@ const afterwareLink = new ApolloLink((operation, forward) => {
 const httpLinkWithMiddleware = afterwareLink.concat(authLink.concat(httpLink));
 
 const wsLink = new WebSocketLink({
-	uri: "ws://localhost:8080/subscriptions",
+	uri: "ws://10.45.1.11:8080/subscriptions",
 	options: {
 		reconnect: true,
 		connectionParams: {
@@ -51,7 +51,9 @@ const wsLink = new WebSocketLink({
 
 const link = split(
 	({ query }) => {
-		const { kind, operation } = getMainDefinition(query) as OperationDefinitionNode;
+		const { kind, operation } = getMainDefinition(
+			query
+		) as OperationDefinitionNode;
 		return kind === "OperationDefinition" && operation === "subscription";
 	},
 	wsLink,
