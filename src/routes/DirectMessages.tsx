@@ -1,15 +1,15 @@
 import * as React from "react";
-import * as _ from "lodash";
 import { RouteComponentProps, Redirect } from "react-router-dom";
-import { compose, graphql, ChildProps } from "react-apollo";
+import { graphql, compose, ChildProps } from "react-apollo";
+import * as _ from "lodash";
 import gql from "graphql-tag";
 
 import { meQuery } from "../graphql/team";
-import Header from "../components/Header";
+// import Header from "../components/Header";
 import SendMessage from "../components/SendMessage";
 import AppLayout from "../components/AppLayout";
 import Sidebar from "../containers/Sidebar";
-import MessageContainer from "../containers/MessageContainer";
+// import MessageContainer from "../containers/MessageContainer";
 export interface Channel {
 	id: number;
 	name: string;
@@ -34,25 +34,24 @@ export interface AllTeamsQueryResult {
 	me: MeQuery;
 }
 
-interface ViewTeamProps {
+interface DirectMessagesProps {
 	teamId: string;
-	channelId: string;
+	userId: string;
 }
 
-class ViewTeam extends React.Component<
-	ChildProps<RouteComponentProps<ViewTeamProps>, AllTeamsQueryResult>
+class DirectMessages extends React.Component<
+	ChildProps<RouteComponentProps<DirectMessagesProps>, AllTeamsQueryResult>
 > {
 	render() {
 		if (this.props.data === undefined) {
 			return null;
 		}
 		const {
-			mutate,
 			data: { loading, me },
-			match: { params: { teamId, channelId } }
+			match: { params: { teamId, userId } }
 		} = this.props;
 
-		if (loading || me === undefined || mutate === undefined) {
+		if (loading || me === undefined) {
 			return null;
 		}
 		const teams = [];
@@ -70,16 +69,9 @@ class ViewTeam extends React.Component<
 			: 0;
 		const team = teamIdx === -1 ? teams[0] : teams[teamIdx];
 
-		const channelIdInteger = parseInt(channelId, 10);
-		const channelIdx = channelIdInteger
-			? _.findIndex(team.channels, ["id", channelIdInteger])
-			: 0;
-		const channel =
-			channelIdx === -1 ? team.channels[0] : team.channels[channelIdx];
-
 		return (
 			<AppLayout>
-				{channel && <Header channelName={channel.name} />}
+				{/* <Header channelName={channel.name} /> */}
 				<Sidebar
 					teams={teams.map(t => ({
 						id: t.id,
@@ -88,17 +80,13 @@ class ViewTeam extends React.Component<
 					team={team}
 					username={me.username}
 				/>
-				{channel && <MessageContainer channelId={channel.id} />}
-				{channel && (
-					<SendMessage
-						placeholder={channel.name}
-						// tslint:disable-next-line:no-any
-						onSubmit={async (text: any) => {
-							await mutate({ variables: { text, channelId: channel.id } });
-						}}
-						channelId={channel.id}
-					/>
-				)}
+				{/* <MessageContainer channelId={channel.id} /> */}
+				<SendMessage
+					onSubmit={() => {
+						/* todo*/
+					}}
+					placeholder={userId}
+				/>
 			</AppLayout>
 		);
 	}
@@ -111,8 +99,8 @@ const createMessageMutation = gql`
 `;
 
 export default compose(
-	graphql<RouteComponentProps<ViewTeamProps>>(meQuery, {
+	graphql<RouteComponentProps<DirectMessagesProps>>(meQuery, {
 		options: { fetchPolicy: "network-only" }
 	}),
 	graphql(createMessageMutation)
-)(ViewTeam);
+)(DirectMessages);
