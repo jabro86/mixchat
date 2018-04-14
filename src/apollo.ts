@@ -10,7 +10,8 @@ import { OperationDefinitionNode } from "graphql";
 // tslint:disable-next-line:no-any
 const httpLink: any = createHttpLink({ uri: "http://10.45.1.11:8080/graphql" });
 
-const authLink = setContext(() => ({
+// tslint:disable-next-line:no-any
+const authLink: any = setContext(() => ({
 	headers: {
 		"x-token": localStorage.getItem("token"),
 		"x-refresh-token": localStorage.getItem("refreshToken")
@@ -18,27 +19,32 @@ const authLink = setContext(() => ({
 }));
 
 const afterwareLink = new ApolloLink((operation, forward) => {
-	const { headers } = operation.getContext();
-	if (headers) {
-		const token = headers.get("x-token");
-		const refreshToken = headers.get("x-refresh-token");
-		if (token) {
-			localStorage.setItem("token", token);
-		}
-		if (refreshToken) {
-			localStorage.setItem("refreshToken", refreshToken);
-		}
-	}
 	if (forward) {
-		return forward(operation);
+		return forward(operation).map(response => {
+			const {
+				response: { headers }
+			} = operation.getContext();
+			if (headers) {
+				const token = headers.get("x-token");
+				const refreshToken = headers.get("x-refresh-token");
+				if (token) {
+					localStorage.setItem("token", token);
+				}
+				if (refreshToken) {
+					localStorage.setItem("refreshToken", refreshToken);
+				}
+			}
+			return response;
+		});
 	} else {
 		return null;
 	}
 });
+const httpAndAuthLink: ApolloLink = authLink.concat(httpLink);
+const httpLinkWithMiddleware = afterwareLink.concat(httpAndAuthLink);
 
-const httpLinkWithMiddleware = afterwareLink.concat(authLink.concat(httpLink));
-
-const wsLink = new WebSocketLink({
+// tslint:disable-next-line:no-any
+const wsLink: any = new WebSocketLink({
 	uri: "ws://10.45.1.11:8080/subscriptions",
 	options: {
 		reconnect: true,
