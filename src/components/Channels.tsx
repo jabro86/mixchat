@@ -57,6 +57,7 @@ export interface ChannelsProps {
 	users: IdAndName[];
 	onAddChannelClick(event: React.SyntheticEvent<{}>): void;
 	onInvitePeopleClick(event: React.SyntheticEvent<{}>): void;
+	onDirectMessageClick(event: React.SyntheticEvent<{}>): void;
 }
 
 const channel = ({ id, name }: IdAndName, teamId: number) => (
@@ -79,7 +80,8 @@ export default class Channels extends React.Component<ChannelsProps> {
 			teamId,
 			isOwner,
 			onAddChannelClick,
-			onInvitePeopleClick
+			onInvitePeopleClick,
+			onDirectMessageClick
 		} = this.props;
 		return (
 			<ChannelWrapper>
@@ -91,14 +93,19 @@ export default class Channels extends React.Component<ChannelsProps> {
 					<SideBarList>
 						<SideBarListHeader>
 							Channels{" "}
-							{isOwner && <Icon name="add circle" onClick={onAddChannelClick} />}
+							{isOwner && (
+								<Icon name="add circle" onClick={onAddChannelClick} />
+							)}
 						</SideBarListHeader>
 						{channels.map(c => channel(c, teamId))}
 					</SideBarList>
 				</div>
 				<div>
 					<SideBarList>
-						<SideBarListHeader>Direct Messages</SideBarListHeader>
+						<SideBarListHeader>
+							Direct Messages{" "}
+							<Icon name="add circle" onClick={onDirectMessageClick} />
+						</SideBarListHeader>
 						{users.map(user)}
 					</SideBarList>
 				</div>

@@ -16,9 +16,20 @@
     esutils "^2.0.2"
     js-tokens "^3.0.0"
 
+"@babel/runtime@^7.0.0-beta.46":
+  version "7.0.0-beta.46"
+  resolved "https://artifacts.mgm-tp.com/artifactory/api/npm/npm-repos/@babel/runtime/-/runtime-7.0.0-beta.46.tgz#466a9c0498f6d12d054a185981eef742d59d4871"
+  dependencies:
+    core-js "^2.5.3"
+    regenerator-runtime "^0.11.1"
+
 "@types/async@2.0.47":
   version "2.0.47"
   resolved "https://artifacts.mgm-tp.com/artifactory/api/npm/npm-repos/@types/async/-/async-2.0.47.tgz#f49ba1dd1f189486beb6e1d070a850f6ab4bd521"
+
+"@types/async@2.0.49":
+  version "2.0.49"
+  resolved "https://artifacts.mgm-tp.com/artifactory/api/npm/npm-repos/@types/async/-/async-2.0.49.tgz#92e33d13f74c895cb9a7f38ba97db8431ed14bc0"
 
 "@types/graphql@0.12.6":
   version "0.12.6"
@@ -40,17 +51,17 @@
   version "2.2.1"
   resolved "https://artifacts.mgm-tp.com/artifactory/api/npm/npm-repos/@types/jwt-decode/-/jwt-decode-2.2.1.tgz#afdf5c527fcfccbd4009b5fd02d1e18241f2d2f2"
 
-"@types/lodash@^4.14.107":
-  version "4.14.107"
-  resolved "https://artifacts.mgm-tp.com/artifactory/api/npm/npm-repos/@types/lodash/-/lodash-4.14.107.tgz#b2d2ae3958bfb8ff828495cbe12214af9e4d035e"
+"@types/lodash@^4.14.108":
+  version "4.14.108"
+  resolved "https://artifacts.mgm-tp.com/artifactory/api/npm/npm-repos/@types/lodash/-/lodash-4.14.108.tgz#02656af3add2e5b3174f830862c47421c00ef817"
 
 "@types/node@*", "@types/node@^9.4.6":
   version "9.6.0"
   resolved "https://artifacts.mgm-tp.com/artifactory/api/npm/npm-repos/@types/node/-/node-9.6.0.tgz#d3480ee666df9784b1001a1872a2f6ccefb6c2d7"
 
-"@types/node@^9.6.6":
-  version "9.6.6"
-  resolved "https://artifacts.mgm-tp.com/artifactory/api/npm/npm-repos/@types/node/-/node-9.6.6.tgz#439b91f9caf3983cad2eef1e11f6bedcbf9431d2"
+"@types/node@^10.0.4":
+  version "10.0.4"
+  resolved "https://artifacts.mgm-tp.com/artifactory/api/npm/npm-repos/@types/node/-/node-10.0.4.tgz#130598ee56e9a1210a53f557d64935571f05390d"
 
 "@types/react-dom@^16.0.5":
   version "16.0.5"
@@ -78,9 +89,9 @@
   version "16.1.0"
   resolved "https://artifacts.mgm-tp.com/artifactory/api/npm/npm-repos/@types/react/-/react-16.1.0.tgz#6c0e9955ce73f332b4a1948d45decaf18c764c6e"
 
-"@types/react@^16.3.12":
-  version "16.3.12"
-  resolved "https://artifacts.mgm-tp.com/artifactory/api/npm/npm-repos/@types/react/-/react-16.3.12.tgz#68d9146f3e9797e38ffbf22f7ed1dde91a2cfd2e"
+"@types/react@^16.3.13":
+  version "16.3.13"
+  resolved "https://artifacts.mgm-tp.com/artifactory/api/npm/npm-repos/@types/react/-/react-16.3.13.tgz#47d466462b774556c1174ea0eda22c0578643362"
   dependencies:
     csstype "^2.2.0"
 
@@ -236,6 +247,12 @@ apollo-cache@^1.1.7:
   dependencies:
     apollo-utilities "^1.0.11"
 
+apollo-cache@^1.1.8:
+  version "1.1.8"
+  resolved "https://artifacts.mgm-tp.com/artifactory/api/npm/npm-repos/apollo-cache/-/apollo-cache-1.1.8.tgz#b078d33dec876d52b5a81a325d3c254d4e362d3c"
+  dependencies:
+    apollo-utilities "^1.0.12"
+
 apollo-client-preset@^1.0.8:
   version "1.0.8"
   resolved "https://artifacts.mgm-tp.com/artifactory/api/npm/npm-repos/apollo-client-preset/-/apollo-client-preset-1.0.8.tgz#23bd7176849d0d815f12c648774d009b258a449e"
@@ -246,7 +263,7 @@ apollo-client-preset@^1.0.8:
     apollo-link-http "^1.3.1"
     graphql-tag "^2.4.2"
 
-apollo-client@^2.2.2, apollo-client@^2.2.8:
+apollo-client@^2.2.2:
   version "2.2.8"
   resolved "https://artifacts.mgm-tp.com/artifactory/api/npm/npm-repos/apollo-client/-/apollo-client-2.2.8.tgz#b604d31ab2d2dd00db3105d8793b93ee02ce567e"
   dependencies:
@@ -259,6 +276,20 @@ apollo-client@^2.2.2, apollo-client@^2.2.8:
     zen-observable "^0.7.0"
   optionalDependencies:
     "@types/async" "2.0.47"
+
+apollo-client@^2.3.1:
+  version "2.3.1"
+  resolved "https://artifacts.mgm-tp.com/artifactory/api/npm/npm-repos/apollo-client/-/apollo-client-2.3.1.tgz#64b204779b7e8b21f901529527a9a9c973eb7fd4"
+  dependencies:
+    "@types/zen-observable" "^0.5.3"
+    apollo-cache "^1.1.8"
+    apollo-link "^1.0.0"
+    apollo-link-dedup "^1.0.0"
+    apollo-utilities "^1.0.12"
+    symbol-observable "^1.0.2"
+    zen-observable "^0.8.0"
+  optionalDependencies:
+    "@types/async" "2.0.49"
 
 apollo-link-context@^1.0.8:
   version "1.0.8"
@@ -316,6 +347,10 @@ apollo-link@^1.2.2:
 apollo-utilities@^1.0.0, apollo-utilities@^1.0.11:
   version "1.0.11"
   resolved "https://artifacts.mgm-tp.com/artifactory/api/npm/npm-repos/apollo-utilities/-/apollo-utilities-1.0.11.tgz#cd36bfa6e5c04eea2caf0c204a0f38a0ad550802"
+
+apollo-utilities@^1.0.12:
+  version "1.0.12"
+  resolved "https://artifacts.mgm-tp.com/artifactory/api/npm/npm-repos/apollo-utilities/-/apollo-utilities-1.0.12.tgz#9e2b2a34cf89f3bf0d73a664effd8c1bb5d1b7f7"
 
 append-transform@^0.4.0:
   version "0.4.0"
@@ -1095,7 +1130,7 @@ babel-register@^6.26.0:
     mkdirp "^0.5.1"
     source-map-support "^0.4.15"
 
-babel-runtime@^6.18.0, babel-runtime@^6.22.0, babel-runtime@^6.25.0, babel-runtime@^6.26.0, babel-runtime@^6.9.2:
+babel-runtime@^6.18.0, babel-runtime@^6.22.0, babel-runtime@^6.26.0, babel-runtime@^6.9.2:
   version "6.26.0"
   resolved "https://artifacts.mgm-tp.com/artifactory/api/npm/npm-repos/babel-runtime/-/babel-runtime-6.26.0.tgz#965c7058668e82b55d7bfe04ff2337bc8b5647fe"
   dependencies:
@@ -1845,6 +1880,10 @@ core-js@^2.4.0, core-js@^2.5.0:
   version "2.5.4"
   resolved "https://artifacts.mgm-tp.com/artifactory/api/npm/npm-repos/core-js/-/core-js-2.5.4.tgz#f2c8bf181f2a80b92f360121429ce63a2f0aeae0"
 
+core-js@^2.5.3:
+  version "2.5.5"
+  resolved "https://artifacts.mgm-tp.com/artifactory/api/npm/npm-repos/core-js/-/core-js-2.5.5.tgz#b14dde936c640c0579a6b50cabcc132dd6127e3b"
+
 core-util-is@1.0.2, core-util-is@~1.0.0:
   version "1.0.2"
   resolved "https://artifacts.mgm-tp.com/artifactory/api/npm/npm-repos/core-util-is/-/core-util-is-1.0.2.tgz#b5fd54220aa2bc5ab57aab7140c940754503c1a7"
@@ -2339,6 +2378,10 @@ dotenv-expand@4.2.0:
 dotenv@4.0.0:
   version "4.0.0"
   resolved "https://artifacts.mgm-tp.com/artifactory/api/npm/npm-repos/dotenv/-/dotenv-4.0.0.tgz#864ef1379aced55ce6f95debecdce179f7a0cd1d"
+
+downshift@^1.31.14:
+  version "1.31.14"
+  resolved "https://artifacts.mgm-tp.com/artifactory/api/npm/npm-repos/downshift/-/downshift-1.31.14.tgz#98b04614cad2abc4297d0d02b50ff2c48b2625e7"
 
 duplexer3@^0.1.4:
   version "0.1.4"
@@ -3200,11 +3243,11 @@ graphql-tag@^2.4.2:
   version "2.8.0"
   resolved "https://artifacts.mgm-tp.com/artifactory/api/npm/npm-repos/graphql-tag/-/graphql-tag-2.8.0.tgz#52cdea07a842154ec11a2e840c11b977f9b835ce"
 
-graphql-tag@^2.9.1:
-  version "2.9.1"
-  resolved "https://artifacts.mgm-tp.com/artifactory/api/npm/npm-repos/graphql-tag/-/graphql-tag-2.9.1.tgz#1ab090ef7d3518b06d8c97d1393672145fe91587"
+graphql-tag@^2.9.2:
+  version "2.9.2"
+  resolved "https://artifacts.mgm-tp.com/artifactory/api/npm/npm-repos/graphql-tag/-/graphql-tag-2.9.2.tgz#2f60a5a981375f430bf1e6e95992427dc18af686"
 
-graphql@0.13.2:
+graphql@^0.13.2:
   version "0.13.2"
   resolved "https://artifacts.mgm-tp.com/artifactory/api/npm/npm-repos/graphql/-/graphql-0.13.2.tgz#4c740ae3c222823e7004096f832e7b93b2108270"
   dependencies:
@@ -3379,7 +3422,7 @@ hoek@4.x.x:
   version "4.2.1"
   resolved "https://artifacts.mgm-tp.com/artifactory/api/npm/npm-repos/hoek/-/hoek-4.2.1.tgz#9634502aa12c445dd5a7c5734b572bb8738aacbb"
 
-hoist-non-react-statics@^2.3.0, hoist-non-react-statics@^2.3.1, hoist-non-react-statics@^2.5.0:
+hoist-non-react-statics@^2.3.0, hoist-non-react-statics@^2.5.0:
   version "2.5.0"
   resolved "https://artifacts.mgm-tp.com/artifactory/api/npm/npm-repos/hoist-non-react-statics/-/hoist-non-react-statics-2.5.0.tgz#d2ca2dfc19c5a91c5a6615ce8e564ef0347e2a40"
 
@@ -4419,6 +4462,10 @@ jwt-decode@^2.2.0:
   version "2.2.0"
   resolved "https://artifacts.mgm-tp.com/artifactory/api/npm/npm-repos/jwt-decode/-/jwt-decode-2.2.0.tgz#7d86bd56679f58ce6a84704a657dd392bba81a79"
 
+keyboard-key@^1.0.1:
+  version "1.0.1"
+  resolved "https://artifacts.mgm-tp.com/artifactory/api/npm/npm-repos/keyboard-key/-/keyboard-key-1.0.1.tgz#a946294fe59ad5431c63a3ea269f023e51fac6aa"
+
 killable@^1.0.0:
   version "1.0.0"
   resolved "https://artifacts.mgm-tp.com/artifactory/api/npm/npm-repos/killable/-/killable-1.0.0.tgz#da8b84bd47de5395878f95d64d02f2449fe05e6b"
@@ -4600,9 +4647,13 @@ lodash.uniq@^4.5.0:
   version "4.5.0"
   resolved "https://artifacts.mgm-tp.com/artifactory/api/npm/npm-repos/lodash.uniq/-/lodash.uniq-4.5.0.tgz#d0225373aeb652adc1bc82e4945339a842754773"
 
-lodash@4.17.5, "lodash@>=3.5 <5", lodash@^4.13.1, lodash@^4.14.0, lodash@^4.17.2, lodash@^4.17.3, lodash@^4.17.4, lodash@^4.17.5, lodash@^4.3.0:
+lodash@4.17.5, "lodash@>=3.5 <5", lodash@^4.13.1, lodash@^4.14.0, lodash@^4.17.2, lodash@^4.17.3, lodash@^4.17.4, lodash@^4.3.0:
   version "4.17.5"
   resolved "https://artifacts.mgm-tp.com/artifactory/api/npm/npm-repos/lodash/-/lodash-4.17.5.tgz#99a92d65c0272debe8c96b6057bc8fbfa3bed511"
+
+lodash@^4.17.10:
+  version "4.17.10"
+  resolved "https://artifacts.mgm-tp.com/artifactory/api/npm/npm-repos/lodash/-/lodash-4.17.10.tgz#1b7793cf7259ea38fb3661d4d38b3260af8ae4e7"
 
 loglevel@^1.4.1:
   version "1.6.1"
@@ -4856,15 +4907,16 @@ mkdirp@0.5.x, "mkdirp@>=0.5 0", mkdirp@^0.5.1, mkdirp@~0.5.0, mkdirp@~0.5.1:
   dependencies:
     minimist "0.0.8"
 
-mobx-react@^5.0.0:
-  version "5.0.0"
-  resolved "https://artifacts.mgm-tp.com/artifactory/api/npm/npm-repos/mobx-react/-/mobx-react-5.0.0.tgz#8d5a33be376fa22b184a6f555d40a6a3a8459a16"
+mobx-react@^5.1.2:
+  version "5.1.2"
+  resolved "https://artifacts.mgm-tp.com/artifactory/api/npm/npm-repos/mobx-react/-/mobx-react-5.1.2.tgz#ec5c2d29a1df823dbd1b37e214fa36a0907054e2"
   dependencies:
-    hoist-non-react-statics "^2.3.1"
+    hoist-non-react-statics "^2.5.0"
+    react-lifecycles-compat "^3.0.2"
 
-mobx@^4.2.0:
-  version "4.2.0"
-  resolved "https://artifacts.mgm-tp.com/artifactory/api/npm/npm-repos/mobx/-/mobx-4.2.0.tgz#ee0b0a4f3da2f4776225046ab208ac329a4841d4"
+mobx@^4.2.1:
+  version "4.2.1"
+  resolved "https://artifacts.mgm-tp.com/artifactory/api/npm/npm-repos/mobx/-/mobx-4.2.1.tgz#dd4190daf1b43d41a3a228585253f9970b0a27dd"
 
 move-concurrently@^1.0.1:
   version "1.0.1"
@@ -5794,7 +5846,7 @@ promise@^7.1.1:
   dependencies:
     asap "~2.0.3"
 
-prop-types@^15.5.10, prop-types@^15.5.4, prop-types@^15.6.0:
+prop-types@^15.5.10, prop-types@^15.5.4, prop-types@^15.6.0, prop-types@^15.6.1:
   version "15.6.1"
   resolved "https://artifacts.mgm-tp.com/artifactory/api/npm/npm-repos/prop-types/-/prop-types-15.6.1.tgz#36644453564255ddda391191fb3a125cbdf654ca"
   dependencies:
@@ -5937,9 +5989,9 @@ rc@^1.0.1, rc@^1.1.6, rc@^1.1.7:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
-react-apollo@^2.1.3:
-  version "2.1.3"
-  resolved "https://artifacts.mgm-tp.com/artifactory/api/npm/npm-repos/react-apollo/-/react-apollo-2.1.3.tgz#5eb02cdf18cc4bdeb615bda94baedb50354e94e5"
+react-apollo@^2.1.4:
+  version "2.1.4"
+  resolved "https://artifacts.mgm-tp.com/artifactory/api/npm/npm-repos/react-apollo/-/react-apollo-2.1.4.tgz#a51059ac56f1a7997cad636a5d36398b9c93ff12"
   dependencies:
     fbjs "^0.8.16"
     hoist-non-react-statics "^2.5.0"
@@ -5986,6 +6038,10 @@ react-error-overlay@^4.0.0:
 react-is@^16.3.1:
   version "16.3.2"
   resolved "https://artifacts.mgm-tp.com/artifactory/api/npm/npm-repos/react-is/-/react-is-16.3.2.tgz#f4d3d0e2f5fbb6ac46450641eb2e25bf05d36b22"
+
+react-lifecycles-compat@^3.0.2:
+  version "3.0.2"
+  resolved "https://artifacts.mgm-tp.com/artifactory/api/npm/npm-repos/react-lifecycles-compat/-/react-lifecycles-compat-3.0.2.tgz#7279047275bd727a912e25f734c0559527e84eff"
 
 react-router-dom@^4.2.2:
   version "4.2.2"
@@ -6160,7 +6216,7 @@ regenerate@^1.2.1:
   version "1.3.3"
   resolved "https://artifacts.mgm-tp.com/artifactory/api/npm/npm-repos/regenerate/-/regenerate-1.3.3.tgz#0c336d3980553d755c39b586ae3b20aa49c82b7f"
 
-regenerator-runtime@^0.11.0:
+regenerator-runtime@^0.11.0, regenerator-runtime@^0.11.1:
   version "0.11.1"
   resolved "https://artifacts.mgm-tp.com/artifactory/api/npm/npm-repos/regenerator-runtime/-/regenerator-runtime-0.11.1.tgz#be05ad7f9bf7d22e056f9726cee5017fbf19e2e9"
 
@@ -6484,15 +6540,16 @@ semantic-ui-css@^2.3.1:
   dependencies:
     jquery x.*
 
-semantic-ui-react@^0.79.1:
-  version "0.79.1"
-  resolved "https://artifacts.mgm-tp.com/artifactory/api/npm/npm-repos/semantic-ui-react/-/semantic-ui-react-0.79.1.tgz#80bd0ccfb3b3c1184a1b1b3f6067ab1225aed5f0"
+semantic-ui-react@^0.80.0:
+  version "0.80.0"
+  resolved "https://artifacts.mgm-tp.com/artifactory/api/npm/npm-repos/semantic-ui-react/-/semantic-ui-react-0.80.0.tgz#68c43661ba1c73798bb04c17e6c31df4b1bcb0cc"
   dependencies:
-    babel-runtime "^6.25.0"
+    "@babel/runtime" "^7.0.0-beta.46"
     classnames "^2.2.5"
     fbjs "^0.8.16"
-    lodash "^4.17.4"
-    prop-types "^15.5.10"
+    keyboard-key "^1.0.1"
+    lodash "^4.17.10"
+    prop-types "^15.6.1"
 
 semver-diff@^2.0.0:
   version "2.1.0"
