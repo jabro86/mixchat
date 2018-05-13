@@ -10,17 +10,11 @@ import SendMessage from "../components/SendMessage";
 import AppLayout from "../components/AppLayout";
 import Sidebar from "../containers/Sidebar";
 import DirectMessageContainer from "../containers/DirectMessageContainer";
+import { Team } from "./ViewTeam";
+
 export interface Channel {
 	id: number;
 	name: string;
-}
-
-export interface Team {
-	id: number;
-	owner: number;
-	name: string;
-	admin: boolean;
-	channels: Channel[];
 }
 
 export interface MeQuery {

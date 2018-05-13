@@ -10,6 +10,8 @@ import SendMessage from "../components/SendMessage";
 import AppLayout from "../components/AppLayout";
 import Sidebar from "../containers/Sidebar";
 import MessageContainer from "../containers/MessageContainer";
+import { User } from "../components/DirectMessageModal";
+
 export interface Channel {
 	id: number;
 	name: string;
@@ -20,6 +22,7 @@ export interface Team {
 	owner: number;
 	name: string;
 	admin: boolean;
+	directMessageMembers: User[];
 	channels: Channel[];
 }
 
@@ -49,7 +52,9 @@ class ViewTeam extends React.Component<
 		const {
 			mutate,
 			data: { loading, me },
-			match: { params: { teamId, channelId } }
+			match: {
+				params: { teamId, channelId }
+			}
 		} = this.props;
 
 		if (loading || me === undefined || mutate === undefined) {
