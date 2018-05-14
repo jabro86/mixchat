@@ -7,44 +7,61 @@ import Messages from "../components/Messages";
 
 // tslint:disable:no-any
 
+const newDirectMessageSubscription = gql`
+	subscription($teamId: Int!, $userId: Int!) {
+		newDirectMessage(teamId: $teamId, userId: $userId) {
+			id
+			sender {
+				username
+			}
+			text
+			created_at
+		}
+	}
+`;
+
 class DirectMessageContainer extends React.Component<any> {
 	unsubscribe: Function;
 
-	// subscribe = (channelId: number) => {
-	// 	return this.props.data.subscribeToMore({
-	// 		document: newChannelMessageSubscription,
-	// 		variables: {
-	// 			channelId
-	// 		},
-	// 		updateQuery: (prev: any, { subscriptionData }: any) => {
-	// 			if (!subscriptionData) {
-	// 				return prev;
-	// 			}
-	// 			return {
-	// 				...prev,
-	// 				messages: [...prev.messages, subscriptionData.data.newChannelMessage]
-	// 			};
-	// 		}
-	// 	});
-	// };
-	// componentDidMount() {
-	// 	this.unsubscribe = this.subscribe(this.props.channelId);
-	// }
+	subscribe = (teamId: number, userId: number) => {
+		return this.props.data.subscribeToMore({
+			document: newDirectMessageSubscription,
+			variables: {
+				teamId,
+				userId
+			},
+			updateQuery: (prev: any, { subscriptionData }: any) => {
+				if (!subscriptionData) {
+					return prev;
+				}
+				return {
+					...prev,
+					directMessages: [
+						...prev.directMessages,
+						subscriptionData.data.newDirectMessage
+					]
+				};
+			}
+		});
+	};
+	componentDidMount() {
+		this.unsubscribe = this.subscribe(this.props.teamId, this.props.userId);
+	}
 
-	// componentWillReceiveProps({ channelId }: any) {
-	// 	if (this.props.channelId !== channelId) {
-	// 		if (this.unsubscribe) {
-	// 			this.unsubscribe();
-	// 		}
-	// 		this.unsubscribe = this.subscribe(channelId);
-	// 	}
-	// }
+	componentWillReceiveProps({ teamId, userId }: any) {
+		if (this.props.teamId !== teamId || this.props.userId !== userId) {
+			if (this.unsubscribe) {
+				this.unsubscribe();
+			}
+			this.unsubscribe = this.subscribe(teamId, userId);
+		}
+	}
 
-	// componentWillUnmount() {
-	// 	if (this.unsubscribe) {
-	// 		this.unsubscribe();
-	// 	}
-	// }
+	componentWillUnmount() {
+		if (this.unsubscribe) {
+			this.unsubscribe();
+		}
+	}
 
 	render() {
 		const {
