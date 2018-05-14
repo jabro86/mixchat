@@ -1,6 +1,6 @@
 import * as React from "react";
 import { RouteComponentProps, Redirect } from "react-router-dom";
-import { graphql, compose, ChildProps } from "react-apollo";
+import { graphql, compose } from "react-apollo";
 import * as _ from "lodash";
 import gql from "graphql-tag";
 
@@ -33,16 +33,15 @@ interface DirectMessagesProps {
 	userId: string;
 }
 
-class DirectMessages extends React.Component<
-	ChildProps<RouteComponentProps<DirectMessagesProps>, AllTeamsQueryResult>
-> {
+// tslint:disable-next-line:no-any
+class DirectMessages extends React.Component<any, AllTeamsQueryResult> {
 	render() {
 		if (this.props.data === undefined) {
 			return null;
 		}
 		const {
 			mutate,
-			data: { loading, me },
+			data: { loading, me, getUser },
 			match: {
 				params: { teamId, userId }
 			}
@@ -68,7 +67,7 @@ class DirectMessages extends React.Component<
 
 		return (
 			<AppLayout>
-				<Header channelName={"Someone's Username"} />
+				<Header channelName={getUser.username} />
 				<Sidebar
 					teams={teams.map(t => ({
 						id: t.id,
@@ -77,7 +76,7 @@ class DirectMessages extends React.Component<
 					team={team}
 					username={me.username}
 				/>
-				<DirectMessageContainer teamId={teamId} userId={userId} />
+				<DirectMessageContainer teamId={team.id} userId={userId} />
 				<SendMessage
 					onSubmit={async (text: string) => {
 						const response = await mutate!({
@@ -85,6 +84,29 @@ class DirectMessages extends React.Component<
 								text,
 								receiverId: userId,
 								teamId: teamId
+							},
+							optimisticResponse: {
+								createDirectMessage: true
+							},
+							// tslint:disable-next-line:no-any
+							update: (store: any) => {
+								// tslint:disable-next-line:no-any
+								const data: any = store.readQuery({ query: meQuery });
+								const teamIdx2 = _.findIndex(data.me.teams, ["id", team.id]);
+								const notAlreadyThere = data.me.teams[
+									teamIdx2
+								].directMessageMembers.every(
+									// tslint:disable-next-line:no-any
+									(member: any) => member.id !== parseInt(userId, 10)
+								);
+								if (notAlreadyThere) {
+									data.me.teams[teamIdx2].directMessageMembers.push({
+										__typename: "User",
+										id: userId,
+										username: getUser.username
+									});
+									store.writeQuery({ query: meQuery, data });
+								}
 							}
 						});
 						console.log(response);
@@ -102,9 +124,37 @@ const createDirectMessageMutation = gql`
 	}
 `;
 
+const directMessageMeQuery = gql`
+	query($userId: Int!) {
+		getUser(userId: $userId) {
+			username
+		}
+		me {
+			id
+			username
+			teams {
+				id
+				name
+				admin
+				directMessageMembers {
+					id
+					username
+				}
+				channels {
+					id
+					name
+				}
+			}
+		}
+	}
+`;
+
 export default compose(
-	graphql<RouteComponentProps<DirectMessagesProps>>(meQuery, {
-		options: { fetchPolicy: "network-only" }
+	graphql<RouteComponentProps<DirectMessagesProps>>(directMessageMeQuery, {
+		options: props => ({
+			variables: { userId: props.match.params.userId },
+			fetchPolicy: "network-only"
+		})
 	}),
 	graphql(createDirectMessageMutation)
 )(DirectMessages);
