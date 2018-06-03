@@ -79,7 +79,7 @@ class DirectMessages extends React.Component<any, AllTeamsQueryResult> {
 				<DirectMessageContainer teamId={team.id} userId={userId} />
 				<SendMessage
 					onSubmit={async (text: string) => {
-						const response = await mutate!({
+						await mutate!({
 							variables: {
 								text,
 								receiverId: userId,
@@ -109,7 +109,6 @@ class DirectMessages extends React.Component<any, AllTeamsQueryResult> {
 								}
 							}
 						});
-						console.log(response);
 					}}
 					placeholder={userId}
 				/>

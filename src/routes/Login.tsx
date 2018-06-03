@@ -2,7 +2,14 @@ import * as React from "react";
 import { RouteComponentProps } from "react-router-dom";
 import { observer } from "mobx-react";
 import { extendObservable } from "mobx";
-import { Message, Form, Container, Header, Input, Button } from "semantic-ui-react";
+import {
+	Message,
+	Form,
+	Container,
+	Header,
+	Input,
+	Button
+} from "semantic-ui-react";
 import gql from "graphql-tag";
 import { graphql, ChildProps } from "react-apollo";
 
@@ -57,7 +64,7 @@ class Login extends React.Component<ChildProps<LoginProps, LoginMutation>> {
 			if (ok) {
 				localStorage.setItem("token", token);
 				localStorage.setItem("refreshToken", refreshToken);
-				this.props.history.push("/");
+				this.props.history.push("/view-team");
 			} else {
 				const err = {
 					emailError: "",
@@ -72,7 +79,11 @@ class Login extends React.Component<ChildProps<LoginProps, LoginMutation>> {
 	};
 
 	render() {
-		const { email, password, errors: { emailError, passwordError } } = this;
+		const {
+			email,
+			password,
+			errors: { emailError, passwordError }
+		} = this;
 		const errorList = [];
 
 		if (emailError) {

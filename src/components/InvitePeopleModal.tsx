@@ -78,7 +78,9 @@ const addTeamMemberMutation = gql`
 export default compose(
 	graphql(addTeamMemberMutation),
 	withFormik({
-		mapPropsToValues: (props: InvitePeopleModalProps & MutateProps) => ({ email: "" }),
+		mapPropsToValues: (props: InvitePeopleModalProps & MutateProps) => ({
+			email: ""
+		}),
 		handleSubmit: async (
 			values,
 			{ props: { teamId, mutate, onClose }, setSubmitting, setErrors }
@@ -93,7 +95,18 @@ export default compose(
 				setSubmitting(false);
 			} else {
 				setSubmitting(false);
-				setErrors(normalizeErrors(errors));
+				const errorsLength = errors.length;
+				const filteredErrors = errors.filter(
+					// tslint:disable-next-line:no-any
+					(e: any) => e.message !== "name must be unique"
+				);
+				if (errorsLength !== filteredErrors.length) {
+					filteredErrors.push({
+						path: "email",
+						message: "This user is already part of the team"
+					});
+				}
+				setErrors(normalizeErrors(filteredErrors));
 			}
 		}
 	})

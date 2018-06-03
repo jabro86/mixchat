@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Modal, Input, Button, Form } from "semantic-ui-react";
+import { Modal, Form, Input, Button } from "semantic-ui-react";
 import { withFormik } from "formik";
 import gql from "graphql-tag";
 import { graphql, compose, MutateProps } from "react-apollo";
@@ -21,12 +21,16 @@ const AddChannelModal = (props: any) => {
 		handleChange,
 		handleBlur,
 		isSubmitting,
-		handleSubmit
+		handleSubmit,
+		resetForm
 	} = props;
 	return (
 		<Modal
 			open={open}
-			onClose={onClose}
+			onClose={e => {
+				resetForm();
+				onClose(e);
+			}}
 			style={{
 				marginTop: "0px !important",
 				marginLeft: "auto",
@@ -47,7 +51,14 @@ const AddChannelModal = (props: any) => {
 						/>
 					</Form.Field>
 					<Form.Group>
-						<Button disabled={isSubmitting} fluid={true} onClick={onClose}>
+						<Button
+							disabled={isSubmitting}
+							fluid={true}
+							onClick={e => {
+								resetForm();
+								onClose(e);
+							}}
+						>
 							Cancel
 						</Button>
 						<Button disabled={isSubmitting} fluid={true} onClick={handleSubmit}>
@@ -97,7 +108,9 @@ export default compose(
 				},
 				update: (store, context) => {
 					if (context.data) {
-						const { createChannel: { ok, channel } } = context.data;
+						const {
+							createChannel: { ok, channel }
+						} = context.data;
 						if (!ok) {
 							return;
 						}

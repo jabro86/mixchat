@@ -29,7 +29,7 @@ class MessageContainer extends React.Component<any> {
 			variables: {
 				channelId
 			},
-			updateQuery: (prev: any, { subscriptionData }: any) => {
+			updateQuery: (prev: any = {}, { subscriptionData }: any) => {
 				if (!subscriptionData) {
 					return prev;
 				}
@@ -60,7 +60,9 @@ class MessageContainer extends React.Component<any> {
 	}
 
 	render() {
-		const { data: { loading, messages } } = this.props;
+		const {
+			data: { loading, messages }
+		} = this.props;
 		return loading ? null : (
 			<Messages>
 				<Comment.Group>

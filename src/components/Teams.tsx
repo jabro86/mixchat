@@ -54,7 +54,12 @@ export default class Teams extends React.Component<TeamsProps> {
 		const { teams } = this.props;
 		return (
 			<TeamWrapper>
-				<TeamList>{teams.map(team)}</TeamList>
+				<TeamList>
+					{teams.map(team)}
+					<Link to={`/create-team`} key="add-team">
+						<TeamListItem>+</TeamListItem>
+					</Link>
+				</TeamList>
 			</TeamWrapper>
 		);
 	}

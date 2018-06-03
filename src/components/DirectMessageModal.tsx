@@ -21,6 +21,7 @@ const DirectMessageModal = (props: any) => {
 		data: { loading, getTeamMembers },
 		history
 	} = props;
+
 	return (
 		<Modal
 			open={open}
@@ -31,7 +32,7 @@ const DirectMessageModal = (props: any) => {
 				marginRight: "auto"
 			}}
 		>
-			<Modal.Header>Add Channel</Modal.Header>
+			<Modal.Header>Direct Message To</Modal.Header>
 			<Modal.Content>
 				<Form>
 					<Form.Field>
@@ -52,7 +53,7 @@ const DirectMessageModal = (props: any) => {
 								}) => (
 									<div>
 										<Input
-											{...getInputProps({ placeholder: "Favorite color" })}
+											{...getInputProps({ placeholder: "Username..." })}
 											fluid={true}
 										/>
 										{isOpen ? (

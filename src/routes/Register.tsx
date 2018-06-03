@@ -1,5 +1,12 @@
 import * as React from "react";
-import { Form, Container, Header, Input, Button, Message } from "semantic-ui-react";
+import {
+	Form,
+	Container,
+	Header,
+	Input,
+	Button,
+	Message
+} from "semantic-ui-react";
 import { graphql, ChildProps } from "react-apollo";
 import { RouteComponentProps } from "react-router-dom";
 import gql from "graphql-tag";
@@ -24,7 +31,10 @@ export interface RegisterMutation {
 	register: RegisterResponse;
 }
 
-class Register extends React.Component<ChildProps<RegisterProps, RegisterMutation>, RegisterState> {
+class Register extends React.Component<
+	ChildProps<RegisterProps, RegisterMutation>,
+	RegisterState
+> {
 	state = {
 		username: "",
 		usernameError: "",
@@ -56,7 +66,7 @@ class Register extends React.Component<ChildProps<RegisterProps, RegisterMutatio
 
 			const { ok, errors } = response.data.register;
 			if (ok) {
-				this.props.history.push("/");
+				this.props.history.push("/login");
 			} else {
 				const err = {};
 				errors.forEach(({ path, message }) => {
@@ -68,7 +78,14 @@ class Register extends React.Component<ChildProps<RegisterProps, RegisterMutatio
 	};
 
 	render() {
-		const { username, usernameError, email, emailError, password, passwordError } = this.state;
+		const {
+			username,
+			usernameError,
+			email,
+			emailError,
+			password,
+			passwordError
+		} = this.state;
 
 		const errorList = [];
 		if (usernameError) {

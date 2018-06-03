@@ -48,15 +48,16 @@ const wsLink: any = new WebSocketLink({
 	uri: "ws://localhost:8080/subscriptions",
 	options: {
 		reconnect: true,
-		connectionParams: {
+		connectionParams: () => ({
 			token: localStorage.getItem("token"),
 			refreshToken: localStorage.getItem("refreshToken")
-		}
+		})
 	}
 });
 
 const link = split(
-	({ query }) => {
+	// tslint:disable-next-line:no-any
+	({ query }: any) => {
 		const { kind, operation } = getMainDefinition(
 			query
 		) as OperationDefinitionNode;
