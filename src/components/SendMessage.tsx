@@ -1,12 +1,14 @@
 import * as React from "react";
-import { Input } from "semantic-ui-react";
+import { Input, Button, Icon } from "semantic-ui-react";
 import styled from "styled-components";
 import { withFormik } from "formik";
+import FileUpload from "./FileUpload";
 
 const SendMessageWrapper = styled.div`
 	grid-column: 3;
-	grid-row: 3;
 	margin: 20px;
+	display: grid;
+	grid-template-columns: auto 97%;
 `;
 
 export interface SendMessageProps {
@@ -27,6 +29,11 @@ export class StyledSendMessage extends React.Component<any> {
 
 		return (
 			<SendMessageWrapper>
+				<FileUpload>
+					<Button icon={true}>
+						<Icon name="plus" />
+					</Button>
+				</FileUpload>
 				<Input
 					onChange={handleChange}
 					// tslint:disable-next-line:no-any
@@ -39,7 +46,6 @@ export class StyledSendMessage extends React.Component<any> {
 					onBlur={handleBlur}
 					name="message"
 					value={values.message}
-					fluid={true}
 					placeholder={`Message #${placeholder}`}
 				/>
 			</SendMessageWrapper>

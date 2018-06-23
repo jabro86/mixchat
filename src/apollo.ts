@@ -1,5 +1,4 @@
 import { ApolloClient } from "apollo-client";
-import { createHttpLink } from "apollo-link-http";
 import { InMemoryCache } from "apollo-cache-inmemory";
 import { setContext } from "apollo-link-context";
 import { ApolloLink, split } from "apollo-link";
@@ -7,8 +6,17 @@ import { WebSocketLink } from "apollo-link-ws";
 import { getMainDefinition } from "apollo-utilities";
 import { OperationDefinitionNode } from "graphql";
 
+// TODO: maybe it does not work with afterware, then we
+// have to use our own createFileLink method and replace
+// createUploadLink
+const createUploadLink = require("apollo-upload-client").createUploadLink;
+
+// import { createFileLink } from "./createFileLink";
+
 // tslint:disable-next-line:no-any
-const httpLink: any = createHttpLink({ uri: "http://localhost:8080/graphql" });
+const httpLink: any = createUploadLink({
+	uri: "http://localhost:8080/graphql"
+});
 
 // tslint:disable-next-line:no-any
 const authLink: any = setContext(() => ({

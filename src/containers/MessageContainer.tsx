@@ -4,6 +4,7 @@ import { graphql } from "react-apollo";
 import { Comment } from "semantic-ui-react";
 
 import Messages from "../components/Messages";
+import FileUpload from "../components/FileUpload";
 
 // tslint:disable:no-any
 
@@ -33,9 +34,20 @@ class MessageContainer extends React.Component<any> {
 				if (!subscriptionData) {
 					return prev;
 				}
+				const previousMessages = (prev && prev.messages) || [];
+				const newChannelMessage =
+					subscriptionData &&
+					subscriptionData.data &&
+					subscriptionData.data.newChannelMessage;
+				if (newChannelMessage !== undefined) {
+					return {
+						...prev,
+						messages: [...previousMessages, newChannelMessage]
+					};
+				}
 				return {
 					...prev,
-					messages: [...prev.messages, subscriptionData.data.newChannelMessage]
+					messages: [...previousMessages]
 				};
 			}
 		});
@@ -65,22 +77,24 @@ class MessageContainer extends React.Component<any> {
 		} = this.props;
 		return loading ? null : (
 			<Messages>
-				<Comment.Group>
-					{messages.map((m: any) => (
-						<Comment key={`${m.id}-message`}>
-							<Comment.Content>
-								<Comment.Author as="a">{m.user.username}</Comment.Author>
-								<Comment.Metadata>
-									<div>{m.created_at}</div>
-								</Comment.Metadata>
-								<Comment.Text>{m.text}</Comment.Text>
-								<Comment.Actions>
-									<Comment.Action>Reply</Comment.Action>
-								</Comment.Actions>
-							</Comment.Content>
-						</Comment>
-					))}
-				</Comment.Group>
+				<FileUpload disableClick={true}>
+					<Comment.Group>
+						{messages.map((m: any) => (
+							<Comment key={`${m.id}-message`}>
+								<Comment.Content>
+									<Comment.Author as="a">{m.user.username}</Comment.Author>
+									<Comment.Metadata>
+										<div>{m.created_at}</div>
+									</Comment.Metadata>
+									<Comment.Text>{m.text}</Comment.Text>
+									<Comment.Actions>
+										<Comment.Action>Reply</Comment.Action>
+									</Comment.Actions>
+								</Comment.Content>
+							</Comment>
+						))}
+					</Comment.Group>
+				</FileUpload>
 			</Messages>
 		);
 	}
