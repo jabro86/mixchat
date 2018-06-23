@@ -1,6 +1,6 @@
 # Slack Clone - Client Implementation
 
-Imlemented using React, GraphQL and Appollo-Client.
+Imlemented using React, GraphQL and Apollo-Client.
 
 ## Setup
 
