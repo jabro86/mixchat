@@ -3,13 +3,13 @@ import Dropzone from "react-dropzone";
 import { graphql } from "react-apollo";
 import gql from "graphql-tag";
 
-// tslint:disable-next-line:no-any
 const FileUpload = ({
 	children,
 	disableClick = false,
 	channelId,
 	mutate
-}: any) => (
+}: // tslint:disable-next-line:no-any
+any) => (
 	<Dropzone
 		className="ignore"
 		onDrop={async ([file]) => {
