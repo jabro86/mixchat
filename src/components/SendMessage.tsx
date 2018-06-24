@@ -24,12 +24,13 @@ export class StyledSendMessage extends React.Component<any> {
 			handleChange,
 			handleBlur,
 			isSubmitting,
-			handleSubmit
+			handleSubmit,
+			channelId
 		} = this.props;
 
 		return (
 			<SendMessageWrapper>
-				<FileUpload>
+				<FileUpload channelId={channelId}>
 					<Button icon={true}>
 						<Icon name="plus" />
 					</Button>
