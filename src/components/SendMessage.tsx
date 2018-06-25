@@ -8,7 +8,7 @@ const SendMessageWrapper = styled.div`
 	grid-column: 3;
 	margin: 20px;
 	display: grid;
-	grid-template-columns: auto 97%;
+	grid-template-columns: 45px auto;
 `;
 
 export interface SendMessageProps {

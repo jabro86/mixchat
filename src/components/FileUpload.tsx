@@ -7,10 +7,12 @@ const FileUpload = ({
 	children,
 	disableClick = false,
 	channelId,
-	mutate
+	mutate,
+	style = {}
 }: // tslint:disable-next-line:no-any
 any) => (
 	<Dropzone
+		style={style}
 		className="ignore"
 		onDrop={async ([file]) => {
 			console.log("file", file);
