@@ -1,9 +1,10 @@
 import * as React from "react";
 import { Modal, Input, Button, Form } from "semantic-ui-react";
 import Downshift from "downshift";
-import gql from "graphql-tag";
 import { graphql } from "react-apollo";
 import { withRouter } from "react-router-dom";
+
+import { getTeamMembersQuery } from "../graphql/team";
 
 export interface User {
 	id: number;
@@ -97,15 +98,6 @@ const DirectMessageModal = (props: any) => {
 		</Modal>
 	);
 };
-
-const getTeamMembersQuery = gql`
-	query($teamId: Int!) {
-		getTeamMembers(teamId: $teamId) {
-			id
-			username
-		}
-	}
-`;
 
 // tslint:disable-next-line:no-any
 const WithRouterAndGraphqlDirectMessageModal: any = withRouter(
