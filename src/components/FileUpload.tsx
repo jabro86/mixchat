@@ -15,14 +15,12 @@ any) => (
 		style={style}
 		className="ignore"
 		onDrop={async ([file]) => {
-			console.log("file", file);
-			const response = await mutate({
+			await mutate({
 				variables: {
 					channelId,
 					file
 				}
 			});
-			console.log("response", response);
 		}}
 		disableClick={disableClick}
 	>

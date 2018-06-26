@@ -75,6 +75,7 @@ class DirectMessages extends React.Component<any, AllTeamsQueryResult> {
 					}))}
 					team={team}
 					username={me.username}
+					currentUserId={me.id}
 				/>
 				<DirectMessageContainer teamId={team.id} userId={userId} />
 				<SendMessage

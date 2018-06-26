@@ -3,14 +3,14 @@ import { Dropdown } from "semantic-ui-react";
 import { graphql } from "react-apollo";
 
 import { getTeamMembersQuery } from "../graphql/team";
-
+// tslint:disable:no-any
 const MultiSelectUsers = ({
 	data: { loading, getTeamMembers },
 	value,
 	handleChange,
-	placeholder
-}: // tslint:disable-next-line:no-any
-any) => {
+	placeholder,
+	currentUserId
+}: any) => {
 	return loading ? null : (
 		<Dropdown
 			value={value}
@@ -20,17 +20,17 @@ any) => {
 			multiple={true}
 			search={true}
 			selection={true}
-			// tslint:disable-next-line:no-any
-			options={getTeamMembers.map((tm: any) => ({
-				key: tm.id,
-				value: tm.id,
-				text: tm.username
-			}))}
+			options={getTeamMembers
+				.filter((tm: any) => tm.id !== currentUserId)
+				.map((tm: any) => ({
+					key: tm.id,
+					value: tm.id,
+					text: tm.username
+				}))}
 		/>
 	);
 };
 
-// tslint:disable-next-line:no-any
 export default graphql<any>(getTeamMembersQuery, {
 	options: ({ teamId }) => ({ variables: { teamId } })
 })(MultiSelectUsers);

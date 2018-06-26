@@ -2,7 +2,7 @@ import * as React from "react";
 import styled from "styled-components";
 import { Icon } from "semantic-ui-react";
 import { Link } from "react-router-dom";
-import { User } from "./DirectMessageModal";
+import { Channel } from "../routes/ViewTeam";
 
 const ChannelWrapper = styled.div`
 	grid-column: 2;
@@ -55,7 +55,7 @@ export interface ChannelsProps {
 	isOwner: boolean;
 	teamId: number;
 	channels: IdAndName[];
-	users: User[];
+	dmChannels: Channel[];
 	onAddChannelClick(event: React.SyntheticEvent<{}>): void;
 	onInvitePeopleClick(event: React.SyntheticEvent<{}>): void;
 	onDirectMessageClick(event: React.SyntheticEvent<{}>): void;
@@ -66,10 +66,10 @@ const channel = ({ id, name }: IdAndName, teamId: number) => (
 		<SideBarListItem># {name}</SideBarListItem>
 	</Link>
 );
-const user = ({ id, username }: User, teamId: number) => (
-	<SideBarListItem key={`user-${id}`}>
+const dmChannel = ({ id, name }: Channel, teamId: number) => (
+	<SideBarListItem key={`dm-channel-${id}`}>
 		<Link to={`/view-team/user/${teamId}/${id}`}>
-			<Bubble /> {username}
+			<Bubble /> {name}
 		</Link>
 	</SideBarListItem>
 );
@@ -79,7 +79,7 @@ export default class Channels extends React.Component<ChannelsProps> {
 			teamName,
 			username,
 			channels,
-			users,
+			dmChannels,
 			teamId,
 			isOwner,
 			onAddChannelClick,
@@ -109,7 +109,7 @@ export default class Channels extends React.Component<ChannelsProps> {
 							Direct Messages{" "}
 							<Icon name="add circle" onClick={onDirectMessageClick} />
 						</SideBarListHeader>
-						{users.map(u => user(u, teamId))}
+						{dmChannels.map(dmc => dmChannel(dmc, teamId))}
 					</SideBarList>
 				</div>
 				{isOwner && (

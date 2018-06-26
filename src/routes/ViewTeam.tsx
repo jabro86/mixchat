@@ -15,6 +15,8 @@ import { User } from "../components/DirectMessageModal";
 export interface Channel {
 	id: number;
 	name: string;
+	public: boolean;
+	dm: boolean;
 }
 
 export interface Team {
@@ -92,6 +94,7 @@ class ViewTeam extends React.Component<
 					}))}
 					team={team}
 					username={me.username}
+					currentUserId={me.id}
 				/>
 				{channel && <MessageContainer channelId={channel.id} />}
 				{channel && (

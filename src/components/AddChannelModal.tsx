@@ -26,7 +26,8 @@ const AddChannelModal = (props: any) => {
 		handleSubmit,
 		resetForm,
 		setFieldValue,
-		teamId
+		teamId,
+		currentUserId
 	} = props;
 	return (
 		<Modal
@@ -66,12 +67,13 @@ const AddChannelModal = (props: any) => {
 						<Form.Field>
 							<MultiSelectUsers
 								value={values.members}
-								placeholder="Select member to invite"
+								placeholder="Select members to invite"
 								teamId={teamId}
 								// tslint:disable-next-line:no-any
 								handleChange={(e: any, { value }: any) =>
 									setFieldValue("members", value)
 								}
+								currentUserId={currentUserId}
 							/>
 						</Form.Field>
 					)}
