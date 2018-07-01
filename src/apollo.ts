@@ -15,7 +15,7 @@ const createUploadLink = require("apollo-upload-client").createUploadLink;
 
 // tslint:disable-next-line:no-any
 const httpLink: any = createUploadLink({
-	uri: "http://localhost:8080/graphql"
+	uri: "http://192.168.178.23:8080/graphql"
 });
 
 // tslint:disable-next-line:no-any
@@ -53,7 +53,7 @@ const httpLinkWithMiddleware = afterwareLink.concat(httpAndAuthLink);
 
 // tslint:disable-next-line:no-any
 const wsLink: any = new WebSocketLink({
-	uri: "ws://localhost:8080/subscriptions",
+	uri: "ws://192.168.178.23:8080/subscriptions",
 	options: {
 		reconnect: true,
 		connectionParams: () => ({

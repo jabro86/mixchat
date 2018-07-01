@@ -3,8 +3,11 @@ import { Modal, Button, Form } from "semantic-ui-react";
 import { graphql, compose, MutateProps } from "react-apollo";
 import { withRouter } from "react-router-dom";
 import { withFormik } from "formik";
+import { RouteComponentProps } from "react-router-dom";
 import gql from "graphql-tag";
+import * as _ from "lodash";
 
+import { meQuery } from "../graphql/team";
 import MultiSelectUsers from "./MultiSelectUsers";
 // import { getTeamMembersQuery } from "../graphql/team";
 
@@ -15,7 +18,7 @@ export interface User {
 	teams: object[];
 }
 
-interface DirectMessageModalProps {
+interface DirectMessageModalProps extends RouteComponentProps<{}> {
 	teamId: string;
 	open: boolean;
 	onClose(event?: React.SyntheticEvent<{}>): void;
@@ -45,7 +48,7 @@ const DirectMessageModal = (props: any) => {
 				marginRight: "auto"
 			}}
 		>
-			<Modal.Header>Direct Message To</Modal.Header>
+			<Modal.Header>Direct Messaging</Modal.Header>
 			<Modal.Content>
 				<Form>
 					<Form.Field>
@@ -83,7 +86,10 @@ const DirectMessageModal = (props: any) => {
 
 const getOrCreateChannelMutation = gql`
 	mutation($teamId: Int!, $members: [Int!]!) {
-		getOrCreateChannel(teamId: $teamId, members: $members)
+		getOrCreateChannel(teamId: $teamId, members: $members) {
+			id
+			name
+		}
 	}
 `;
 
@@ -96,11 +102,42 @@ export default compose(
 		}),
 		handleSubmit: async (
 			{ members },
-			{ props: { teamId, mutate, onClose }, setSubmitting, setErrors }
+			{
+				props: { teamId, mutate, onClose, history },
+				setSubmitting,
+				setErrors,
+				resetForm
+			}
 		) => {
-			await mutate({ variables: { members, teamId } });
+			await mutate({
+				variables: { members, teamId },
+				update: (store, context) => {
+					if (context.data) {
+						const {
+							getOrCreateChannel: { id, name }
+						} = context.data;
+
+						// tslint:disable-next-line:no-any
+						const data: any = store.readQuery({ query: meQuery });
+						const teamIdx = _.findIndex(data.me.teams, ["id", teamId]);
+						const notInChannelList = data.me.teams[teamIdx].channels.every(
+							(c: any) => c.id !== id
+						);
+						if (notInChannelList) {
+							data.me.teams[teamIdx].channels.push({
+								__typename: "Channel",
+								id,
+								name,
+								dm: true
+							});
+							store.writeQuery({ query: meQuery, data });
+						}
+						history.push(`/view-team/${teamId}/${id}`);
+					}
+				}
+			});
 			onClose();
-			setSubmitting(false);
+			resetForm();
 		}
 	})
 )(DirectMessageModal);
