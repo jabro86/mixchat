@@ -79,7 +79,7 @@ class MessageContainer extends React.Component<any, MessageContainerState> {
 				if (newChannelMessage !== undefined) {
 					return {
 						...prev,
-						messages: [...previousMessages, newChannelMessage]
+						messages: [newChannelMessage, ...previousMessages]
 					};
 				}
 				return {
@@ -128,40 +128,41 @@ class MessageContainer extends React.Component<any, MessageContainerState> {
 				channelId={channelId}
 			>
 				<Comment.Group>
-					{this.state.hasMoreItems && (
-						<Button
-							onClick={() => {
-								this.props.data.fetchMore({
-									variables: {
-										channelId: this.props.channelId,
-										offset: this.props.data.messages.length
-									},
-									updateQuery: (
-										previousResult: any,
-										{ fetchMoreResult }: any
-									) => {
-										if (!fetchMoreResult) {
-											return previousResult;
-										}
+					{this.state.hasMoreItems &&
+						messages.length >= 20 && (
+							<Button
+								onClick={() => {
+									this.props.data.fetchMore({
+										variables: {
+											channelId,
+											cursor: messages[messages.length - 1].created_at
+										},
+										updateQuery: (
+											previousResult: any,
+											{ fetchMoreResult }: any
+										) => {
+											if (!fetchMoreResult) {
+												return previousResult;
+											}
 
-										if (fetchMoreResult.messages.length < 20) {
-											this.setState({ hasMoreItems: false });
+											if (fetchMoreResult.messages.length < 20) {
+												this.setState({ hasMoreItems: false });
+											}
+											return {
+												...previousResult,
+												messages: [
+													...previousResult.messages,
+													...fetchMoreResult.messages
+												]
+											};
 										}
-										return {
-											...previousResult,
-											messages: [
-												...previousResult.messages,
-												...fetchMoreResult.messages
-											]
-										};
-									}
-								});
-							}}
-						>
-							Load More
-						</Button>
-					)}
-					{messages.map((m: any) => (
+									});
+								}}
+							>
+								Load More
+							</Button>
+						)}
+					{[...messages].reverse().map((m: any) => (
 						<Comment key={`${m.id}-message`}>
 							<Comment.Content>
 								<Comment.Author as="a">{m.user.username}</Comment.Author>
@@ -182,8 +183,8 @@ class MessageContainer extends React.Component<any, MessageContainerState> {
 }
 
 const messagesQuery = gql`
-	query($offset: Int!, $channelId: Int!) {
-		messages(offset: $offset, channelId: $channelId) {
+	query($cursor: String, $channelId: Int!) {
+		messages(cursor: $cursor, channelId: $channelId) {
 			id
 			text
 			user {
