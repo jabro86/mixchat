@@ -1,0 +1,12 @@
+{
+  "name": "mixchat",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jabro86/mixchat.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "private": true,
+  "workspaces": ["client", "server"]
+}
