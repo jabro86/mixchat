@@ -1,6 +1,8 @@
 {
   "name": "mixchat",
-  "scripts": {},
+  "scripts": {
+    "precommit": "pretty-quick --staged"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jabro86/mixchat.git"
@@ -8,5 +10,12 @@
   "author": "",
   "license": "MIT",
   "private": true,
-  "workspaces": ["client", "server"]
+  "workspaces": ["client", "server"],
+  "devDependencies": {
+    "husky": "^0.14.3",
+		"prettier": "^1.12.1",
+		"pretty-quick": "^1.4.1",
+    "tslint": "^5.10.0",
+    "tslint-config-prettier": "^1.12.0"
+  }
 }

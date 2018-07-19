@@ -81,7 +81,7 @@ app.use(
 	"/graphiql",
 	graphiqlExpress({
 		endpointURL: graphqlEndpoint,
-		subscriptionsEndpoint: "ws://192.168.178.23:8080/subscriptions"
+		subscriptionsEndpoint: "ws://localhost/subscriptions"
 	})
 );
 
@@ -91,6 +91,7 @@ const server = createServer(app);
 
 models.sequelize.sync({ force: false }).then(() => {
 	server.listen(8080, () => {
+		// tslint:disable-next-line:no-unused-expression
 		new SubscriptionServer(
 			{
 				execute,
@@ -100,8 +101,8 @@ models.sequelize.sync({ force: false }).then(() => {
 					if (token && refreshToken) {
 						let user = null;
 						try {
-							const { user } = verify(token, SECRET) as any;
-							return { models, user };
+							const { user: userFromToken } = verify(token, SECRET) as any;
+							return { models, user: userFromToken };
 						} catch (err) {
 							const newTokens = await refreshTokens(
 								token,

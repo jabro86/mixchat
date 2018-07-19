@@ -16,12 +16,14 @@ mkdirp.sync(uploadDir);
 const storeFS = ({ stream, filename }) => {
 	const id = shortid.generate();
 	const path = `${uploadDir}/${id}-${filename}`;
-	return new Promise<{ id; path }>((resolve, reject) =>
+	// tslint:disable-next-line:no-any
+	return new Promise<any>((resolve, reject) =>
 		stream
 			.on("error", error => {
-				if (stream.truncated)
+				if (stream.truncated) {
 					// Delete the truncated file
 					fs.unlinkSync(path);
+				}
 				reject(error);
 			})
 			.pipe(fs.createWriteStream(path))
@@ -50,7 +52,7 @@ export default {
 	},
 	Message: {
 		url: parent =>
-			parent.url ? `http://192.168.178.23:8080/${parent.url}` : parent.url,
+			parent.url ? `http://localhost:8080/${parent.url}` : parent.url,
 		user: ({ user, userId }, args, { models }) => {
 			if (user) {
 				return user;
@@ -82,6 +84,7 @@ export default {
 				};
 
 				if (cursor) {
+					// tslint:disable-next-line:no-any
 					(options.where as any).created_at = {
 						[models.op.lt]: cursor
 					};

@@ -1,7 +1,8 @@
 import * as React from "react";
 import gql from "graphql-tag";
 import { graphql } from "react-apollo";
-import { Comment, Button } from "semantic-ui-react";
+import { Comment } from "semantic-ui-react";
+import * as _ from "lodash";
 
 import FileUpload from "../components/FileUpload";
 import RenderText from "../components/RenderText";
@@ -56,10 +57,14 @@ interface MessageContainerState {
 
 class MessageContainer extends React.Component<any, MessageContainerState> {
 	unsubscribe: Function;
+	scroller: HTMLDivElement | null;
+	hasMoreItems = true;
+	debouncedFunc: (() => void) & _.Cancelable;
 
-	state = {
-		hasMoreItems: true
-	};
+	constructor(props: any) {
+		super(props);
+		this.debouncedFunc = _.debounce(this.handleScroll, 120);
+	}
 
 	subscribe = (channelId: number) => {
 		return this.props.data.subscribeToMore({
@@ -93,12 +98,29 @@ class MessageContainer extends React.Component<any, MessageContainerState> {
 		this.unsubscribe = this.subscribe(this.props.channelId);
 	}
 
-	componentWillReceiveProps({ channelId }: any) {
+	componentWillReceiveProps({ data: { messages }, channelId }: any) {
 		if (this.props.channelId !== channelId) {
+			this.hasMoreItems = true;
 			if (this.unsubscribe) {
 				this.unsubscribe();
 			}
 			this.unsubscribe = this.subscribe(channelId);
+		}
+
+		if (
+			this.scroller != null &&
+			this.scroller.scrollTop < 100 &&
+			this.props.data.messages &&
+			messages &&
+			this.props.data.messages.length !== messages.length
+		) {
+			const heightBeforeRender = this.scroller.scrollHeight;
+			setTimeout(() => {
+				if (this.scroller != null) {
+					this.scroller.scrollTop =
+						this.scroller.scrollHeight - heightBeforeRender;
+				}
+			}, 200);
 		}
 	}
 
@@ -108,13 +130,46 @@ class MessageContainer extends React.Component<any, MessageContainerState> {
 		}
 	}
 
+	handleScroll = () => {
+		const {
+			data: { messages },
+			channelId
+		} = this.props;
+		if (
+			this.scroller &&
+			this.scroller.scrollTop < 100 &&
+			this.hasMoreItems &&
+			messages.length >= 20
+		) {
+			this.props.data.fetchMore({
+				variables: {
+					channelId,
+					cursor: messages[messages.length - 1].created_at
+				},
+				updateQuery: (previousResult: any, { fetchMoreResult }: any) => {
+					if (!fetchMoreResult) {
+						return previousResult;
+					}
+
+					if (fetchMoreResult.messages.length < 20) {
+						this.hasMoreItems = false;
+					}
+					return {
+						...previousResult,
+						messages: [...previousResult.messages, ...fetchMoreResult.messages]
+					};
+				}
+			});
+		}
+	};
+
 	render() {
 		const {
 			data: { loading, messages },
 			channelId
 		} = this.props;
 		return loading ? null : (
-			<FileUpload
+			<div
 				style={{
 					gridColumn: 3,
 					gridRow: 2,
@@ -124,60 +179,40 @@ class MessageContainer extends React.Component<any, MessageContainerState> {
 					flexDirection: "column-reverse",
 					overflowY: "auto"
 				}}
-				disableClick={true}
-				channelId={channelId}
+				onScroll={this.debouncedFunc}
+				ref={scroller => {
+					this.scroller = scroller;
+				}}
 			>
-				<Comment.Group>
-					{this.state.hasMoreItems &&
-						messages.length >= 20 && (
-							<Button
-								onClick={() => {
-									this.props.data.fetchMore({
-										variables: {
-											channelId,
-											cursor: messages[messages.length - 1].created_at
-										},
-										updateQuery: (
-											previousResult: any,
-											{ fetchMoreResult }: any
-										) => {
-											if (!fetchMoreResult) {
-												return previousResult;
-											}
-
-											if (fetchMoreResult.messages.length < 20) {
-												this.setState({ hasMoreItems: false });
-											}
-											return {
-												...previousResult,
-												messages: [
-													...previousResult.messages,
-													...fetchMoreResult.messages
-												]
-											};
-										}
-									});
-								}}
-							>
-								Load More
-							</Button>
-						)}
-					{[...messages].reverse().map((m: any) => (
-						<Comment key={`${m.id}-message`}>
-							<Comment.Content>
-								<Comment.Author as="a">{m.user.username}</Comment.Author>
-								<Comment.Metadata>
-									<div>{m.created_at}</div>
-								</Comment.Metadata>
-								<Message message={m} />
-								<Comment.Actions>
-									<Comment.Action>Reply</Comment.Action>
-								</Comment.Actions>
-							</Comment.Content>
-						</Comment>
-					))}
-				</Comment.Group>
-			</FileUpload>
+				<FileUpload
+					style={{
+						display: "flex",
+						flexDirection: "column-reverse"
+					}}
+					disableClick={true}
+					channelId={channelId}
+				>
+					<Comment.Group>
+						{messages
+							.slice()
+							.reverse()
+							.map((m: any) => (
+								<Comment key={`${m.id}-message`}>
+									<Comment.Content>
+										<Comment.Author as="a">{m.user.username}</Comment.Author>
+										<Comment.Metadata>
+											<div>{m.created_at}</div>
+										</Comment.Metadata>
+										<Message message={m} />
+										<Comment.Actions>
+											<Comment.Action>Reply</Comment.Action>
+										</Comment.Actions>
+									</Comment.Content>
+								</Comment>
+							))}
+					</Comment.Group>
+				</FileUpload>
+			</div>
 		);
 	}
 }
