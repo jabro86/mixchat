@@ -1,0 +1,15 @@
+{
+	"include": ["./src"],
+	"compilerOptions": {
+		"jsx": "react",
+		"outDir": "./lib",
+		"rootDir": "./src",
+		"strictNullChecks": false,
+		"noImplicitAny": false,
+		"module": "commonjs",
+		"moduleResolution": "node",
+		"experimentalDecorators": true,
+		"skipLibCheck": true,
+		"lib": ["es2015"]
+	}
+}

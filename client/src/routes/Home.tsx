@@ -5,8 +5,14 @@ import gql from "graphql-tag";
 // tslint:disable no-any
 
 const Home = (props: any): JSX.Element => {
-	const { data: { allUsers = [] } } = props;
-	return <div>{allUsers.map((user: any) => <h1 key={user.id}>{user.email}</h1>)}</div>;
+	const {
+		data: { allUsers = [] }
+	} = props;
+	return (
+		<div>
+			{allUsers.map((user: any) => <h1 key={user.id}>{user.email}</h1>)}
+		</div>
+	);
 };
 
 const allUsersQuery = gql`

@@ -2,7 +2,14 @@ import * as React from "react";
 import { RouteComponentProps } from "react-router-dom";
 import { observer } from "mobx-react";
 import { extendObservable } from "mobx";
-import { Message, Form, Container, Header, Input, Button } from "semantic-ui-react";
+import {
+	Message,
+	Form,
+	Container,
+	Header,
+	Input,
+	Button
+} from "semantic-ui-react";
 import gql from "graphql-tag";
 import { graphql, ChildProps } from "react-apollo";
 
@@ -27,7 +34,9 @@ export interface CreateTeamMutation {
 
 export interface CreateTeamProps extends RouteComponentProps<{}> {}
 
-class CreateTeam extends React.Component<ChildProps<CreateTeamProps, CreateTeamMutation>> {
+class CreateTeam extends React.Component<
+	ChildProps<CreateTeamProps, CreateTeamMutation>
+> {
 	private name: string;
 	private errors: {
 		nameError: string;
@@ -75,7 +84,10 @@ class CreateTeam extends React.Component<ChildProps<CreateTeamProps, CreateTeamM
 	};
 
 	render() {
-		const { name, errors: { nameError } } = this;
+		const {
+			name,
+			errors: { nameError }
+		} = this;
 		const errorList = [];
 
 		if (nameError) {
@@ -124,4 +136,6 @@ const createTeamMutation = gql`
 	}
 `;
 const CreateTeamWithObserver: any = observer(CreateTeam); // tslint:disable-line
-export default graphql<CreateTeamMutation>(createTeamMutation)(CreateTeamWithObserver);
+export default graphql<CreateTeamMutation>(createTeamMutation)(
+	CreateTeamWithObserver
+);

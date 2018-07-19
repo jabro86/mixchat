@@ -12,4 +12,6 @@ const MessagesWrapper = styled.div`
 `;
 
 // tslint:disable-next-line:no-any
-export default ({ children }: any) => <MessagesWrapper>{children}</MessagesWrapper>;
+export default ({ children }: any) => (
+	<MessagesWrapper>{children}</MessagesWrapper>
+);
