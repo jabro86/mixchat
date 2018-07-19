@@ -1,10 +1,8 @@
-# mixchat
+![Logo](./assets/logo.png)
 
-All-in-one voice video and textchat app.
+## Getting Started
 
-## setup
-
-### server
+### Server
 
 1.  Install/setup PostgreSQL and create a database called "slack".
 1.  Install npm dependencies and start server application
@@ -13,7 +11,7 @@ All-in-one voice video and textchat app.
     yarn start
     ```
 
-### client
+### Client
 
 1.  Install npm dependencies and start client application
     ```shell
