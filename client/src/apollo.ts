@@ -52,10 +52,11 @@ const httpAndAuthLink: ApolloLink = authLink.concat(httpLink);
 const httpLinkWithMiddleware = afterwareLink.concat(httpAndAuthLink);
 
 // tslint:disable-next-line:no-any
-const wsLink: any = new WebSocketLink({
+export const wsLink: any = new WebSocketLink({
 	uri: "ws://localhost:8080/subscriptions",
 	options: {
 		reconnect: true,
+		lazy: true,
 		connectionParams: () => ({
 			token: localStorage.getItem("token"),
 			refreshToken: localStorage.getItem("refreshToken")

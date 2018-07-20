@@ -13,6 +13,8 @@ import {
 import gql from "graphql-tag";
 import { graphql, ChildProps } from "react-apollo";
 
+import { wsLink } from "../apollo";
+
 export interface Error {
 	path: string;
 	message: string;
@@ -64,6 +66,7 @@ class Login extends React.Component<ChildProps<LoginProps, LoginMutation>> {
 			if (ok) {
 				localStorage.setItem("token", token);
 				localStorage.setItem("refreshToken", refreshToken);
+				wsLink.subscriptionClient.tryReconnect();
 				this.props.history.push("/view-team");
 			} else {
 				const err = {
