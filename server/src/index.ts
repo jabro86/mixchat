@@ -34,7 +34,7 @@ const schema = makeExecutableSchema({
 
 const app = express();
 
-app.use(cors("*"));
+app.use(cors("*" as any));
 
 const addUser = async (req, res, next) => {
 	const token = req.headers["x-token"];
@@ -77,7 +77,8 @@ app.use(
 			SECRET2,
 			channelLoader: new DataLoader(ids =>
 				channelBatcher(ids, models, req.user)
-			)
+			),
+			serverUrl: req.protocol + "://" + req.get("host")
 		}
 	}))
 );

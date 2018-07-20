@@ -109,7 +109,7 @@ class MessageContainer extends React.Component<any, MessageContainerState> {
 
 		if (
 			this.scroller != null &&
-			this.scroller.scrollTop < 100 &&
+			this.scroller.scrollTop < 20 &&
 			this.props.data.messages &&
 			messages &&
 			this.props.data.messages.length !== messages.length
