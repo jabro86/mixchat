@@ -109,19 +109,7 @@ export default {
 		)
 	},
 	Team: {
-		channels: ({ id }, args, { models, user }) =>
-			models.sequelize.query(
-				"select distinct on (id) * from channels as c " +
-					"left outer join pcmembers as pc " +
-					"on c.id = pc.channel_id " +
-					"where team_id = :teamId and (public = true or " +
-					"(pc.user_id = :userId and c.id = pc.channel_id));",
-				{
-					replacements: { teamId: id, userId: user.id },
-					model: models.Channel,
-					raw: true
-				}
-			),
+		channels: ({ id }, args, { channelLoader }) => channelLoader.load(id),
 		directMessageMembers: ({ id }, args, { models, user }) =>
 			models.sequelize.query(
 				"select distinct on (u.id) u.id, u.username from users as u join direct_messages as dm " +
