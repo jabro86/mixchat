@@ -23,6 +23,7 @@ services:
     environment:
       DB_HOST: db
       REDIS_HOST: redis
+      SERVER_URL: http://mixchat.westeurope.cloudapp.azure.com
     volumes:
       - ./uploads:/app/uploads
     depends_on:
