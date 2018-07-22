@@ -21,10 +21,12 @@ const SECRET = "afdaslk34knmlkanmfdllq3e";
 const SECRET2 = "sajdoje2iöowjdöowqj3safksf";
 
 const typeDefs = mergeTypes(
-	fileLoader(path.join(__dirname, "./schema"), { extensions: [".js"] })
+	fileLoader(path.join(__dirname, "./schema"), { extensions: [".js", ".ts"] })
 );
 const resolvers = mergeResolvers(
-	fileLoader(path.join(__dirname, "./resolvers"), { extensions: [".js"] })
+	fileLoader(path.join(__dirname, "./resolvers"), {
+		extensions: [".js", ".ts"]
+	})
 );
 
 const schema = makeExecutableSchema({
