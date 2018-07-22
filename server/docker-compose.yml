@@ -28,7 +28,7 @@ services:
     depends_on:
       - db
       - redis
-    command: ["./wait-for-it.sh", "db:5432", "--", "npm", "run", "start"]
+    command: ["./wait-for-it.sh", "db:5432", "--", "node", "index.js"]
   nginx:
     image: nginx
     networks:
@@ -39,7 +39,7 @@ services:
       - ./mysite.template:/etc/nginx/conf.d/mysite.template
       - ./uploads:/uploads
     ports:
-      - "8080:80"
+      - "80:80"
     command: /bin/bash -c "cat /etc/nginx/conf.d/mysite.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"
 networks:
   webnet:

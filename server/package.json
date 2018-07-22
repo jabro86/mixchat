@@ -21,8 +21,13 @@
 		"@types/mkdirp": "^0.5.2",
 		"@types/node": "^10.5.2",
 		"@types/sequelize": "^4.27.24",
+		"husky": "^0.14.3",
 		"nodemon": "^1.18.3",
+		"prettier": "^1.13.7",
+		"pretty-quick": "^1.6.0",
 		"ts-node": "^7.0.0",
+		"tslint": "^5.11.0",
+		"tslint-config-prettier": "^1.13.0",
 		"typescript": "2.8.3"
 	},
 	"dependencies": {
