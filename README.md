@@ -5,7 +5,6 @@
 ## Backend
 
 1.  Navigate into server directory: `cd server`
-1.  Build docker container: `docker build -t server .`
 1.  Run docker-compose: `docker-compose up`
 
 ### Populating SQL data

@@ -17,7 +17,7 @@ services:
     ports:
       - "3030:5432"
   web:
-    image: server
+    image: jabro86/mixchat-server:latest
     networks:
       - webnet
     environment:
